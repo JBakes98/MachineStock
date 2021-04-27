@@ -13,7 +13,7 @@
                 {% if data_date.date > latest_weekday %}
                 <p>This prototype covers the 30 stocks included in the Dow Industrial Average Index</p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">View Stocks</a>
+                    <a class="btn btn-primary btn-lg" href="{% url 'stock-list' %}" role="button">View Stocks</a>
                 </p>
                 {% else %}
                 <p>This prototype covers the 30 stocks included in the Dow Industrial Average Index, the current
@@ -27,53 +27,6 @@
             </div>
         </div>
     </div>
-
-<!--    <div class="row ">-->
-<!--        <h4 class="display-4">Top Movers</h4>-->
-<!--        <div class="col">-->
-<!--            <table class="table table-hover mr-2 ml-2">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th scope="col">Stock</th>-->
-<!--                    <th scope="col">Change</th>-->
-<!--                    <th scope="col">Change %</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                {% for winner in top_winners %}-->
-<!--                <td scope="row">-->
-<!--                    <a href="#">{{ winner.stock.ticker }}</a>-->
-<!--                </td>-->
-<!--                <td scope="row" class="text-success">{{ winner.change }}</td>-->
-<!--                <td scope="row" class="text-success">{{ winner.change_perc}} <i class="fas fa-sort-up"></i></td>-->
-<!--                </tr>-->
-<!--                {% endfor %}-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div class="col">-->
-<!--            <table class="table table-hover mr-2 ml-2">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th scope="col">Stock</th>-->
-<!--                    <th scope="col">Change</th>-->
-<!--                    <th scope="col">Change %</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                {% for loser in top_losers %}-->
-<!--                <td scope="row">-->
-<!--                    <a href="#">{{ loser.stock.ticker }}</a>-->
-<!--                </td>-->
-<!--                <td scope="row" class="text-danger">{{ loser.change }}</td>-->
-<!--                <td scope="row" class="text-danger">{{ loser.change_perc}} <i class="fas fa-sort-down"></i></td>-->
-<!--                </tr>-->
-<!--                {% endfor %}-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
 
 {% endblock %}
