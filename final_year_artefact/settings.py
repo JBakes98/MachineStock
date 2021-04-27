@@ -13,7 +13,6 @@ try:
 except ImportError:
     pass
 
-
 # Pull django-environ settings file, stored in Secret Manager
 SETTINGS_NAME = "application_settings"
 
@@ -37,9 +36,9 @@ DEBUG = env("DEBUG")
 # Set this value from django-environ
 DATABASES = {"default": env.db()}
 
-INSTALLED_APPS += ["storages"] # for django-storages
-if "myproject" not in INSTALLED_APPS:
-     INSTALLED_APPS += ["myproject"] # for custom data migration
+INSTALLED_APPS += ["storages"]  # For django-storages
+if "final_year_artefact" not in INSTALLED_APPS:
+    INSTALLED_APPS += ["fina_year_artefact"]  # For custom data migration
 
 # Define static storage via django-storages[google]
 GS_BUCKET_NAME = env("GS_BUCKET_NAME")
