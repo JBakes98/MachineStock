@@ -16,53 +16,7 @@
             {% endif %}
         </div>
     </div>
-
     <hr>
-
-    {% autoescape off %}
-    <div class="row bg-light">
-        <h4 class="display-4">Stock Close Price <small class="text-muted">(Adjusted)</small></h4>
-        {% if line_chart %}
-        {{ line_chart|safe }}
-        {% else %}
-        <p>Chart cannot be displayed</p>
-        {% endif %}
-    </div>
-    <div class="row bg-light">
-        <h4 class="display-4">Candlestick Chart <small class="text-muted">(Non-adjusted Data)</small></h4>
-        {% if candlestick_chart %}
-        {{ candlestick_chart|safe }}
-        {% else %}
-        <p>Chart cannot be displayed</p>
-        {% endif %}
-    </div>
-    <div class="row mt-5 bg-light">
-        <h4 class="display-4">Technical Indicators <small class="text-muted">(Non-adjusted Data)</small></h4>
-        {% if ti_chart %}
-        {{ ti_chart|safe }}
-        {% else %}
-        <p>Chart cannot be displayed</p>
-        {% endif %}
-    </div>
-
-    <div class="row mt-5 bg-light">
-        {% if prediction %}
-        <h4 class="display-4">Stock Prediction <small class="text-muted">Model Created: {{ prediction.date }}</small></h4>
-        <div class="col">
-            <small class="text-muted">Model Test</small>
-            {% load static %}
-            <img src="{{ prediction.test_chart.url }}" class="img-fluid">
-        </div>
-        <div class="col">
-            <small class="text-muted">Model Prediction</small>
-            {% load static %}
-            <img src="{{ prediction.prediction_chart.url }}" class="img-fluid">
-        </div>
-        {% else %}
-        <h4 class="display-4">No Predictions</h4>
-        {% endif %}
-    </div>
-
 </div>
 
 {% endautoescape %}

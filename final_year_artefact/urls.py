@@ -19,5 +19,6 @@ from .views import IndexView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),
+    path('stock/', include('stock_prediction.urls')),
     path('admin/', admin.site.urls),
 ]
