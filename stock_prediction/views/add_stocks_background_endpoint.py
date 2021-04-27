@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from stock_prediction.models import Exchange, Stock
 
 
-def add_stocks_background_task(request):
+def add_stocks_background_endpoint(request):
     if request.META.get('HTTP_X_APPENGINE_CRON'):  # Check request comes from GCP Cron
         exchange = [['NYSE', 'New York Stock Exchange'],
                     ['NASDAQ', 'Nasdaq']]

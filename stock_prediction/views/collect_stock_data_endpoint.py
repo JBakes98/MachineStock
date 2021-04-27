@@ -7,7 +7,7 @@ from stock_prediction.tasks.collect_stock_data_task import collect_stock_data
 from stock_prediction.tasks.save_stock_data_task import save_stock_data
 
 
-def add_stocks_background_task(request):
+def collect_stock_data_endpoint(request):
     if request.META.get('HTTP_X_APPENGINE_CRON'):  # Check request comes from GCP Cron
         stocks = Stock.objects.all()
         i = 1
