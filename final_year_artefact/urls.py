@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import IndexView
+from .views import IndexView, add_stocks_background_task
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),
     path('stock/', include('stock_prediction.urls')),
     path('admin/', admin.site.urls),
+    path('add-stocks-background-task/', add_stocks_background_task, name='add-stocks-background-task'),
 ]
