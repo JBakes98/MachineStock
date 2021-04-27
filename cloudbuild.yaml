@@ -22,7 +22,7 @@ steps:
       ]
 
   - name: "gcr.io/google-appengine/exec-wrapper"
-    args: [ "-i", "gcr.io/$PROJECT_ID/${_SERVICE_NAME}",
+    args: [ "-i", "gcr.io/$PROJECT_ID/final_year_artefact",
             "-s", "${PROJECT_ID}:${_REGION}:artefactinstance",
             "--", "python", "manage.py", "migrate" ]
 
