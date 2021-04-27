@@ -10,7 +10,7 @@ from stock_prediction.tasks.save_stock_data_task import save_stock_data
 
 class CollectStockDataEndpoint(View):
     def get(self, request):
-        if request.META.get('HTTP_X_APPENGINE_CRON'):  # Check request comes from GCP Cron
+        # if request.META.get('HTTP_X_APPENGINE_CRON'):  # Check request comes from GCP Cron
             stocks = Stock.objects.all()
             i = 1
             for stock in stocks:
@@ -21,8 +21,8 @@ class CollectStockDataEndpoint(View):
                 save_stock_data(data)
 
                 i += 1
-        else:
-            # Not a GCP Cron request so not authorised
-            return HttpResponse({'response': 'Not authorised GCP service account'}, status="403")
+        # else:
+        #     # Not a GCP Cron request so not authorised
+        #     return HttpResponse({'response': 'Not authorised GCP service account'}, status="403")
 
-        return HttpResponse(status='200')
+            return HttpResponse(status='200')
