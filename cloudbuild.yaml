@@ -18,7 +18,7 @@ steps:
         "--platform",
         "managed",
         "--add-cloudsql-instances",
-        "${PROJECT_ID}:${_DEPLOY_REGION}:arterfactinstance",
+        "${PROJECT_ID}:${_DEPLOY_REGION}:artefactinstance",
         "--allow-unauthenticated",
       ]
 
