@@ -23,7 +23,7 @@ class StockData(models.Model):
        Methods
        -------
        __str__(self)
-           Prints the ticker attribute of the stock when displayed
+           Prints the ticker attribute of the stock and the date of the data
 
         get_data(self)
             Gets the data for the stock as a pandas.Dataframe and cleans it

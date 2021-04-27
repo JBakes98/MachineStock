@@ -46,3 +46,10 @@ STATICFILES_DIRS = []
 DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
 STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
 GS_DEFAULT_ACL = "publicRead"
+
+# Define API settings from env variables
+ALPHA_KEY = env("ALPHA_KEY")
+TWITTER_CONSUMER_KEY = env("TWITTER_CONSUMER_KEY")
+TWITTER_SECRET_CONSUMER_KEY = env("TWITTER_SECRET_CONSUMER_KEY")
+TWITTER_TOKEN_KEY = env("TWITTER_TOKEN_KEY")
+TWITTER_SECRET_TOKEN_KEY = env("TWITTER_SECRET_TOKEN_KEY")

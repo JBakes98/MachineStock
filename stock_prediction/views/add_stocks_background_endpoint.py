@@ -4,7 +4,7 @@ from stock_prediction.models import Exchange, Stock
 
 
 def add_stocks_background_task(request):
-    if request.META.get('HTTP_X_APPENGINE_CRON'): # Check request comes from GCP Cron
+    if request.META.get('HTTP_X_APPENGINE_CRON'):  # Check request comes from GCP Cron
         exchange = [['NYSE', 'New York Stock Exchange'],
                     ['NASDAQ', 'Nasdaq']]
 
@@ -49,7 +49,6 @@ def add_stocks_background_task(request):
 
     else:
         # Not a GCP Cron request so not authorised
-        return HttpResponse(status="403")
+        return HttpResponse({'response': 'Not authorised GCP service account'}, status="403")
 
-    return HttpResponse({'response': 'Not authorised GCP service account'}, status='200')
-
+    return HttpResponse(status='200')
