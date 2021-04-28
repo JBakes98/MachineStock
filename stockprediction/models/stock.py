@@ -1,3 +1,4 @@
+import numpy as np
 from django.db import models
 from .exchange import Exchange
 
@@ -38,3 +39,67 @@ class Stock(models.Model):
     @property
     def latest_data(self):
         return self.stock_data.first()
+
+    def plot_technical_indicators(self, dataset=None):
+        # If dataset is not provided then collect dataset
+        if dataset is None:
+            try:
+                dataset = self.get_data()
+            except ValueError:
+                return
+
+        dataset.replace(0, np.nan, inplace=True)
+
+        trace1 = {
+            'name': self.ticker,
+            'type': 'candlestick',
+            'x': dataset['date'],
+            'yaxis': 'y2',
+            'low': dataset['low'],
+            'high': dataset['high'],
+            'open': dataset['open'],
+            'close': dataset['close'],
+        }
+        trace2 = {
+            "line": {"width": 1},
+            "mode": "lines",
+            "name": "Moving Average",
+            "type": "scatter",
+            "x": dataset['date'],
+            "y": dataset['ma7'],
+            "yaxis": "y2",
+        }
+        trace3 = {
+            "name": "Volume",
+            "type": "bar",
+            "x": dataset['date'],
+            "y": dataset['volume'],
+            "yaxis": "y",
+
+        }
+        trace4 = {
+            "line": {"width": 1},
+            "name": "Bollinger Bands",
+            "type": "scatter",
+            "x": dataset['date'],
+            "y": dataset['upper_band'],
+            "yaxis": "y2",
+            "marker": {"color": "#ccc"},
+            "hoverinfo": "none",
+            "legendgroup": "Bollinger Bands"
+        }
+        trace5 = {
+            "line": {"width": 1},
+            "type": "scatter",
+            "x": dataset['date'],
+            "y": dataset['lower_band'],
+            "yaxis": "y2",
+            "marker": {"color": "#ccc"},
+            "hoverinfo": "none",
+            "showlegend": False,
+            "legendgroup": "Bollinger Bands"
+        }
+        data = ([trace1, trace2, trace3, trace4, trace5])
+
+        plot_div = plot(Figure(data=data, layout=layout), output_type='div',)
+        return plot_div

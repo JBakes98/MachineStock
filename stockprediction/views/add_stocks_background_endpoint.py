@@ -8,7 +8,6 @@ from stockprediction.models import Exchange, Stock
 
 class AddStocksEndpoint(View):
     def get(self, request):
-        # if request.META.get('HTTP_X_APPENGINE_CRON'):  # Check request comes from GCP Cron
             exchange = [['NYSE', 'New York Stock Exchange'],
                         ['NASDAQ', 'Nasdaq']]
 
@@ -50,9 +49,5 @@ class AddStocksEndpoint(View):
                 Stock.objects.update_or_create(ticker=i[0],
                                                name=i[1],
                                                exchange=Exchange.objects.get(symbol=i[2]))
-
-        # else:
-        #     # Not a GCP Cron request so not authorised
-        #     return HttpResponse(json.dumps({'response': 'Not authorised GCP service account'}), status="403")
 
             return HttpResponse(status='200')

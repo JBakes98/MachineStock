@@ -16,7 +16,18 @@
             {% endif %}
         </div>
     </div>
+
     <hr>
+
+    <div class="row mt-5 bg-light">
+        <h4 class="display-4">Technical Indicators <small class="text-muted">(Non-adjusted Data)</small></h4>
+        {% if ti_chart %}
+        {{ ti_chart|safe }}
+        {% else %}
+        <p>Chart cannot be displayed</p>
+        {% endif %}
+    </div>
+
 </div>
 
 {% endblock %}
