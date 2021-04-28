@@ -1,7 +1,13 @@
+from django.db import models
+
 import numpy as np
 import pandas as pd
-from django.db import models
+
+from plotly.offline import plot
+from plotly.graph_objs import Figure
+
 from .exchange import Exchange
+from stockprediction.utils.chart_utils import layout
 
 
 class Stock(models.Model):
