@@ -25,7 +25,7 @@ class Stock(models.Model):
         return self.stock_data.first()
 
     def get_data(self) -> pd.DataFrame:
-        """ Get all of the Stocks related data and return it as a Dataframe"""
+        """ Get all of the Stocks related data and return it as a DataFrame"""
         from .stock_data import StockData
 
         dataset = pd.DataFrame.from_records(StockData.objects.filter(stock=self).values())

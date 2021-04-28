@@ -6,11 +6,11 @@ from stockprediction.utils import dataframe_utils as df_utils
 from stockprediction.utils import stock_utils
 
 
-def collect_stock_data(ticker: str) -> pd.Dataframe:
+def collect_stock_data(ticker: str) -> pd.DataFrame:
     """ Method to collect Stock data from AlphaVantage
 
     Method collects the Stocks specified by the ticker data
-    from the AlphaVantage API and formats the Dataframe and calculates
+    from the AlphaVantage API and formats the DataFrame and calculates
     the technical indicators for the adj close column.
     """
 

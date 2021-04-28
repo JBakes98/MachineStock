@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def get_technical_indicators(dataset: pd.Dataframe, col: str) -> pd.Dataframe:
+def get_technical_indicators(dataset: pd.DataFrame, col: str) -> pd.DataFrame:
     """ Method that calculates technical indicators of a dataset
 
     Method that calculates the technical indicators of the specified
@@ -10,7 +10,7 @@ def get_technical_indicators(dataset: pd.Dataframe, col: str) -> pd.Dataframe:
 
     Parameters
         ----------
-        dataset : pandas.Dataframe
+        dataset : pandas.DataFrame
             A dataframe that contains the data to calculate the technical indicators
 
         col : str

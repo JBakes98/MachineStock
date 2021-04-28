@@ -3,11 +3,11 @@ import pandas as pd
 
 
 def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str) -> pd.DataFrame:
-    """ Format Dataframe prepared for saving to StockData model
+    """ Format DataFrame prepared for saving to StockData model
 
         Parameters
         ----------
-        dataset : pandas.Dataframe
+        dataset : pandas.DataFrame
             A dataframe that need to be formatted
         ticker: str
             The ticker of the stock the data is for
