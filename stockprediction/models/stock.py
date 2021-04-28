@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from django.db import models
 from .exchange import Exchange
 
