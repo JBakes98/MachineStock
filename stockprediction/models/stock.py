@@ -1,6 +1,7 @@
 import numpy as np
 from django.db import models
 from .exchange import Exchange
+from .stock_data import StockData
 
 
 class Stock(models.Model):
@@ -39,6 +40,9 @@ class Stock(models.Model):
     @property
     def latest_data(self):
         return self.stock_data.first()
+
+    def get_data(self):
+        return StockData.objects.filter(stock=self).order_by('-date')
 
     def plot_technical_indicators(self, dataset=None):
         # If dataset is not provided then collect dataset
