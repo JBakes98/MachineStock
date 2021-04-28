@@ -7,6 +7,7 @@ from stockprediction.models import Exchange, Stock
 
 
 class AddStocksEndpoint(View):
+    """ View that acts as an endpoint to create relevant Stock objects """
     def get(self, request):
             exchange = [['NYSE', 'New York Stock Exchange'],
                         ['NASDAQ', 'Nasdaq']]

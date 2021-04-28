@@ -2,8 +2,9 @@ import numpy as np
 import pandas as pd
 
 
-def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str):
-    """
+def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str) -> pd.DataFrame:
+    """ Format Dataframe prepared for saving to StockData model
+
         Parameters
         ----------
         dataset : pandas.Dataframe
@@ -28,4 +29,5 @@ def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str):
                                       })
     # Add stock column to identify what stock the data relates to
     dataset['stock'] = ticker
+
     return dataset

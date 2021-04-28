@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Exchange(models.Model):
+    """ Model to represent a Stock Exchange"""
     name = models.CharField(unique=True, max_length=255, blank=False, null=False)
     symbol = models.CharField(unique=True, max_length=6, blank=False, null=False)
 

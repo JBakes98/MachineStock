@@ -1,15 +1,20 @@
 import numpy as np
+import pandas as pd
 
 
-def get_technical_indicators(dataset, col):
-    """
-        Parameters
+def get_technical_indicators(dataset: pd.Dataframe, col: str) -> pd.Dataframe:
+    """ Method that calculates technical indicators of a dataset
+
+    Method that calculates the technical indicators of the specified
+    column in the provided dataset.
+
+    Parameters
         ----------
         dataset : pandas.Dataframe
-            A dataframe that contains the data to get the technical indicators for
+            A dataframe that contains the data to calculate the technical indicators
 
         col : str
-            The datasets column that the technical indicators are for
+            The datasets column that the technical indicators should be calculated for
     """
 
     # Calculate the change in stock value from previous day in absolute

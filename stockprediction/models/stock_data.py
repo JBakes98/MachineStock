@@ -5,29 +5,24 @@ from .stock import Stock
 
 
 class StockData(models.Model):
+    """ Model to represent Stocks data
+
+    Attributes
+    ----------
+    id : BigAutoField
+        the id for the specific data, a big int due to the number of
+        stock periods that may be stored from over multiple years
+    date : DateTimeField
+        the date and time this  data is for
+    stock : Stock
+        the Stock object this data is for
+
+    Methods
+    -------
+    __str__(self)
+        Prints the ticker attribute of the stock and the date of the data
     """
-       A class used to represent a stocks past data
 
-       ...
-
-       Attributes
-       ----------
-       id : BigAutoField
-           the id for the specific data, a big int due to the number of
-           stock periods that may be stored from over multiple years
-       date : DateTimeField
-           the date and time this  data is for
-       stock : Stock
-           the Stock object this data is for
-
-       Methods
-       -------
-       __str__(self)
-           Prints the ticker attribute of the stock and the date of the data
-
-        get_data(self)
-            Gets the data for the stock as a pandas.Dataframe and cleans it
-       """
     id = models.BigAutoField(primary_key=True)
     date = models.DateTimeField()
     stock = models.ForeignKey(Stock, related_name='stock_data', on_delete=models.CASCADE)

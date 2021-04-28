@@ -1,38 +1,14 @@
 from django.db import models
-
 import numpy as np
 import pandas as pd
-
 from plotly.offline import plot
 from plotly.graph_objs import Figure
-
 from .exchange import Exchange
-from stockprediction.utils.chart_utils import layout
+from stockprediction.utils.chart_utils import get_layout
 
 
 class Stock(models.Model):
-    """
-       A class used to represent a stockprediction
-
-       ...
-
-       Attributes
-       ----------
-       name : str
-           the name of the stockprediction
-       ticker : str
-           the ticker of the stockprediction
-       exchange : Exchange
-           the exchange that the stockprediction is listed on
-
-       Methods
-       -------
-       __str__(self)
-           Prints the ticker attribute of the stockprediction when displayed
-
-        get_data(self)
-            Gets the data for the stockprediction as a pandas.Dataframe and cleans it
-       """
+    """ Model to represent a Stock """
     name = models.CharField(unique=True, max_length=255, blank=False, null=False)
     ticker = models.CharField(unique=True, max_length=4, blank=False, null=False)
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE, blank=False, null=False)
@@ -45,9 +21,11 @@ class Stock(models.Model):
 
     @property
     def latest_data(self):
+        """ Property that is the latest data for the Stock """
         return self.stock_data.first()
 
-    def get_data(self):
+    def get_data(self) -> pd.DataFrame:
+        """ Get all of the Stocks related data and return it as a Dataframe"""
         from .stock_data import StockData
 
         dataset = pd.DataFrame.from_records(StockData.objects.filter(stock=self).values())
@@ -56,16 +34,22 @@ class Stock(models.Model):
             return ValueError
         return dataset
 
-    def plot_technical_indicators(self, dataset=None):
-        # If dataset is not provided then collect dataset
+    def plot_technical_indicators(self, dataset: pd.DataFrame = None) -> Figure:
+        """ Create a Plotly Figure of the Stocks technical indicators
+
+        This method creates a chart of the Stocks data on a Plotly figure
+        in the output of a div for inclusion in templates.
+        """
+
+        # If dataset is not provided then collect
         if dataset is None:
             try:
                 dataset = self.get_data()
             except ValueError:
                 return
 
-        # Replace 0 with Nan so indicators such as ma that dont have a value
-        # until 7 days of data dont display inaccurate data
+        # Replace 0 with Nan so indicators such as ma that don't have a value
+        # until 7 days of data don't display inaccurate data
         dataset.replace(0, np.nan, inplace=True)
 
         trace1 = {
@@ -119,5 +103,5 @@ class Stock(models.Model):
         }
         data = ([trace1, trace2, trace3, trace4, trace5])
 
-        plot_div = plot(Figure(data=data, layout=layout), output_type='div',)
+        plot_div = plot(Figure(data=data, layout=get_layout()), output_type='div',)
         return plot_div

@@ -9,6 +9,7 @@ from stockprediction.tasks.save_stock_data_task import save_stock_data
 
 
 class CollectStockDataEndpoint(View):
+    """ View that acts as an endpoint to trigger Stock data collection """
     def get(self, request):
             stocks = Stock.objects.all()
             i = 1

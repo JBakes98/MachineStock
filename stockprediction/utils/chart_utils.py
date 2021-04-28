@@ -1,4 +1,6 @@
-layout = {
+def get_layout() -> dict:
+    """ Method to get the layout used for Plotly charts """
+    layout = {
             "xaxis": {"rangeselector": {
                 "x": 0,
                 "y": 0.9,
@@ -50,3 +52,5 @@ layout = {
             "yaxis2": {"domain": [0.2, 0.8]},
             "plot_bgcolor": "rgb(250, 250, 250)"
         }
+
+    return layout
