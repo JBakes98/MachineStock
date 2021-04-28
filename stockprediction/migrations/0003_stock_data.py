@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stock_prediction', '0002_stock'),
+        ('stockprediction', '0002_stock'),
     ]
 
     operations = [
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('ema', models.DecimalField(decimal_places=4, max_digits=15)),
                 ('momentum', models.DecimalField(decimal_places=4, max_digits=15)),
                 ('log_momentum', models.DecimalField(decimal_places=4, max_digits=15)),
-                ('stock', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stock_prices', to='stock_prediction.stock')),
+                ('stock', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stock_prices', to='stockprediction.stock')),
             ],
             options={
                 'verbose_name_plural': 'Stock Price Data',

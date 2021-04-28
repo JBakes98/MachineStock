@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from stock_prediction.models import Exchange
+from stockprediction.models import Exchange
 
 
 class ExchangeAdmin(admin.ModelAdmin):

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from stock_prediction import views
+from stockprediction import views
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='home'),

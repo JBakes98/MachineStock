@@ -2,8 +2,8 @@ import datetime
 
 from django.views.generic import TemplateView
 
-from stock_prediction.models import StockData
-from stock_prediction.utils import date_utils
+from stockprediction.models import StockData
+from stockprediction.utils import date_utils
 
 
 class IndexView(TemplateView):

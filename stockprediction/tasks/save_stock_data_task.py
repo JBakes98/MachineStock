@@ -2,7 +2,7 @@ from django.db import IntegrityError
 
 import pandas as pd
 
-from stock_prediction.models import Stock, StockData
+from stockprediction.models import Stock, StockData
 
 
 def save_stock_data(dataset: pd.DataFrame):

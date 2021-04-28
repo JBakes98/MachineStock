@@ -4,26 +4,26 @@ from .exchange import Exchange
 
 class Stock(models.Model):
     """
-       A class used to represent a stock_prediction
+       A class used to represent a stockprediction
 
        ...
 
        Attributes
        ----------
        name : str
-           the name of the stock_prediction
+           the name of the stockprediction
        ticker : str
-           the ticker of the stock_prediction
+           the ticker of the stockprediction
        exchange : Exchange
-           the exchange that the stock_prediction is listed on
+           the exchange that the stockprediction is listed on
 
        Methods
        -------
        __str__(self)
-           Prints the ticker attribute of the stock_prediction when displayed
+           Prints the ticker attribute of the stockprediction when displayed
 
         get_data(self)
-            Gets the data for the stock_prediction as a pandas.Dataframe and cleans it
+            Gets the data for the stockprediction as a pandas.Dataframe and cleans it
        """
     name = models.CharField(unique=True, max_length=255, blank=False, null=False)
     ticker = models.CharField(unique=True, max_length=4, blank=False, null=False)

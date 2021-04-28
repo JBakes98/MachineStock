@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse
 from django.views import View
 
-from stock_prediction.models import Exchange, Stock
+from stockprediction.models import Exchange, Stock
 
 
 class AddStocksEndpoint(View):

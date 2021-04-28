@@ -1,6 +1,6 @@
 from django.views.generic import DetailView
 
-from stock_prediction.models import Stock
+from stockprediction.models import Stock
 
 
 class StockDetail(DetailView):

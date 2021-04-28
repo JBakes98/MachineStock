@@ -37,7 +37,7 @@ DEBUG = env("DEBUG")
 DATABASES = {"default": env.db()}
 
 INSTALLED_APPS += ["storages"]  # For django-storages
-if "final_year_artefact" not in INSTALLED_APPS:
+if "finalyearartefact" not in INSTALLED_APPS:
     INSTALLED_APPS += ["fina_year_artefact"]  # For custom data migration
 
 # Define static storage via django-storages[google]

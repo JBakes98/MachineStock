@@ -1,9 +1,9 @@
 from django.conf import settings
 from alpha_vantage.timeseries import TimeSeries
 
-from stock_prediction.models import Stock
-from stock_prediction.utils import dataframe_utils as df_utils
-from stock_prediction.utils import stock_utils
+from stockprediction.models import Stock
+from stockprediction.utils import dataframe_utils as df_utils
+from stockprediction.utils import stock_utils
 
 
 def collect_stock_data(ticker: str):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from stock_prediction.models import StockData
+from stockprediction.models import StockData
 
 
 class StockDataAdmin(admin.ModelAdmin):

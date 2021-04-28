@@ -3,9 +3,9 @@ import time
 from django.http import HttpResponse
 from django.views import View
 
-from stock_prediction.models import Stock
-from stock_prediction.tasks.collect_stock_data_task import collect_stock_data
-from stock_prediction.tasks.save_stock_data_task import save_stock_data
+from stockprediction.models import Stock
+from stockprediction.tasks.collect_stock_data_task import collect_stock_data
+from stockprediction.tasks.save_stock_data_task import save_stock_data
 
 
 class CollectStockDataEndpoint(View):
