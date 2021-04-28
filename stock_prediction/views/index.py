@@ -17,7 +17,7 @@ class IndexView(TemplateView):
         context['latest_weekday'] = prev_weekday
 
         context['top_winners'] = StockData.objects.filter(
-            date=[prev_weekday]
+            date=prev_weekday
         ).order_by('-date', '-change_perc')[:5]
 
         context['top_losers'] = StockData.objects.filter(

@@ -30,10 +30,13 @@
             <td>{{ stock.exchange }}</td>
             {% if stock.latest_data.change_perc > 0 %}
             <td class="text-success">{{ stock.latest_data.adj_close }}</td>
-            <td class="text-success">{{ stock.latest_data.change_perc}} <i class="fas fa-sort-up"></i></td>
+            <td class="text-success">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-up"></i></td>
+            {% elif stock.latest_data.change_perc == 0%}
+            <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
+            <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-circle"></i></td>
             {% else %}
             <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
-            <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-sort-down"></i></td>
+            <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-down"></i></td>
             {% endif %}
         </tr>
         {% endfor %}

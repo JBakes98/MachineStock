@@ -44,7 +44,7 @@
                     <a href="{% url 'stock-detail' ticker=winner.stock.ticker %}">{{ winner.stock.ticker }}</a>
                 </td>
                 <td scope="row" class="text-success">{{ winner.change }}</td>
-                <td scope="row" class="text-success">{{ winner.change_perc}} <i class="fas fa-sort-up"></i></td>
+                <td scope="row" class="text-success">{{ winner.change_perc}} <i class="fas fa-angle-up"></i></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -66,7 +66,7 @@
                     <a href="{% url 'stock-detail' ticker=loser.stock.ticker %}">{{ loser.stock.ticker }}</a>
                 </td>
                 <td scope="row" class="text-danger">{{ loser.change }}</td>
-                <td scope="row" class="text-danger">{{ loser.change_perc}} <i class="fas fa-sort-down"></i></td>
+                <td scope="row" class="text-danger">{{ loser.change_perc}} <i class="fas fa-angle-down"></i></i></td>
                 </tr>
                 {% endfor %}
                 </tbody>
