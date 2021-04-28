@@ -34,3 +34,7 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.ticker
+
+    @property
+    def latest_data(self):
+        return self.stock_data.first()
