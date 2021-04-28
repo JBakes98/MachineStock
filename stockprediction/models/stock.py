@@ -1,7 +1,6 @@
 import numpy as np
 from django.db import models
 from .exchange import Exchange
-from .stock_data import StockData
 
 
 class Stock(models.Model):
@@ -42,7 +41,13 @@ class Stock(models.Model):
         return self.stock_data.first()
 
     def get_data(self):
-        return StockData.objects.filter(stock=self).order_by('-date')
+        from .stock_data import StockData
+
+        dataset = pd.DataFrame.from_records(StockData.objects.filter(stock=self).values())
+        # If there is not data found return a value error
+        if dataset.empty:
+            return ValueError
+        return dataset
 
     def plot_technical_indicators(self, dataset=None):
         # If dataset is not provided then collect dataset
@@ -52,6 +57,8 @@ class Stock(models.Model):
             except ValueError:
                 return
 
+        # Replace 0 with Nan so indicators such as ma that dont have a value
+        # until 7 days of data dont display inaccurate data
         dataset.replace(0, np.nan, inplace=True)
 
         trace1 = {
