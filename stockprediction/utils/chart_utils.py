@@ -13,12 +13,6 @@ def get_layout() -> dict:
                         "label": "reset"
                     },
                     {
-                        "step": "year",
-                        "count": 1,
-                        "label": "1yr",
-                        "stepmode": "backward"
-                    },
-                    {
                         "step": "month",
                         "count": 3,
                         "label": "3 mo",
