@@ -17,11 +17,11 @@
 
             {% if stock.latest_data.change_perc > 0 %}
             <p class="lead">{{ stock.latest_data.adj_close }}
-                <small class="text-success">{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-up"></i></small>
+                <small class="text-success">{{ stock_data.change_perc }}% <i class="fas fa-sort-up"></i></small>
             </p>
             {% else %}
             <p class="lead">{{ stock.latest_data.adj_close }}
-                <small class="text-danger">{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
+                <small class="text-danger">{{ stock_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
             </p>
             {% endif %}
         </div>
