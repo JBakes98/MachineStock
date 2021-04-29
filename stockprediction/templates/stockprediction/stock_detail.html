@@ -4,25 +4,20 @@
 <div class="container mt-2">
     <div class="jumbotron jumbotron-fluid">
         <div class="container-fluid">
-
-            {% if refresh %}
-            <div class="d-inline">
-            <h1 class="display-4">{{ stock.name }}</h1>
-
-            </div>
+            <h1 class="display-4">
+                <span>{{ stock.name }}</span>
+            {% if stock.latest_data.change_perc > 0 %}
+            <span class="lead">{{ stock.latest_data.adj_close }}
+                <small class="text-success">{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-up"></i></small>
+            </span>
             {% else %}
-            <h1 class="display-4">{{ stock.name }}</h1>
-                      <a class="btn btn-primary btn-lg" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">Refresh Stock data</a>
+            <span class="lead">{{ stock.latest_data.adj_close }}
+                <small class="text-danger">{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
+            </span>
             {% endif %}
-
-            {% if stock_data.change_perc > 0 %}
-            <p class="lead">{{ stock_data.adj_close }}
-                <small class="text-success">{{ stock_data.change_perc }}% <i class="fas fa-sort-up"></i></small>
-            </p>
-            {% else %}
-            <p class="lead">{{ stock_data.adj_close }}
-                <small class="text-danger">{{ stock_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
-            </p>
+            </h1>
+            {% if refresh %}
+            <a class="btn btn-primary btn-lg" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">Refresh Stock data</a>
             {% endif %}
         </div>
     </div>
