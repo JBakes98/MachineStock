@@ -16,6 +16,7 @@
             </span>
             {% endif %}
             </h1>
+
             {% if refresh %}
             <a class="btn btn-primary btn-lg" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">Refresh Stock data</a>
             {% endif %}
@@ -25,7 +26,7 @@
     <hr>
 
     <div class="row mt-5 bg-light">
-        <h4 class="display-4">Technical Indicators <small class="text-muted">(Non-adjusted Data)</small></h4>
+        <h4 class="display-4">Technical Indicators</h4>
         {% if ti_chart %}
         {{ ti_chart|safe }}
         {% else %}
