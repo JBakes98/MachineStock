@@ -1,6 +1,9 @@
+import datetime
+
 from django.views.generic import DetailView
 
 from stockprediction.models import Stock
+from stockprediction.utils import date_utils
 
 
 class StockDetail(DetailView):
@@ -18,6 +21,9 @@ class StockDetail(DetailView):
         """
 
         context = super(StockDetail, self).get_context_data(**kwargs)
+        latest_weekday = date_utils.prev_weekday(datetime.date.today())
+
+        context['refresh'] = self.object.latest_data.date is latest_weekday
         context['ti_chart'] = self.object.plot_technical_indicators()
 
         return context

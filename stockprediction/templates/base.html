@@ -9,13 +9,36 @@
     <script src="https://kit.fontawesome.com/1b5d0c64b3.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
 {% include "navbar.html" %}
+{% include "toast.html" %}
 
 {% block content %}
 
 {% endblock %}
 
 <script>
+var xmlHttp = null;
+
+function refreshStockData(callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = processRequest;
+    xmlHttp.open("GET", "stocks/collect-stock-data-endpoint/", true); // true for asynchronous
+    xmlHttp.send(null);
+
+    $(document).ready(function() {
+                $(".toast .toast-body").html("Collecting latest Stock data, this may take a few minutes...");
+                $(".toast").toast("show");
+                });
+}
+
+function processRequest() {
+   $(document).ready(function() {
+                $(".toast").toast("show");
+                });
+}
+
 function checkTime(i) {
     if (i < 10) {
         i = "0" + i;

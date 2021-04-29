@@ -12,8 +12,21 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="{% url 'stock-list' %}">Stocks</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-cog"></i></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+          </a>
+          <ul class="dropdown-menu"  aria-labelledby="settingsDropdown">
+            {% if data_up_to_date %}
+              <li>
+                <a class="dropdown-item disabled" href="#" role="button" onclick="refreshStockData()">Refresh data</a>
+              </li>
+            {% else %}
+              <li>
+                <a class="dropdown-item" href="#" role="button" onclick="refreshStockData()">Refresh data</a>
+              </li>
+            {% endif %}
+          </ul>
         </li>
       </ul>
 

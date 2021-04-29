@@ -10,7 +10,7 @@
                     price movement of stocks</p>
                 <hr class="my-4">
 
-                {% if data_date.date == latest_weekday.date %}
+                {% if data_up_to_date %}
                 <p>This prototype covers the 30 stocks included in the Dow Industrial Average Index</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="{% url 'stock-list' %}" role="button">View Stocks</a>

@@ -21,8 +21,6 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
 
         prev_weekday = date_utils.prev_weekday(datetime.date.today())
-        context['data_date'] = StockData.objects.all().order_by('-date')[:1]
-        context['latest_weekday'] = prev_weekday
 
         context['top_winners'] = StockData.objects.filter(
             date=prev_weekday
