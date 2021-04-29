@@ -15,12 +15,12 @@
                       <a class="btn btn-primary btn-lg" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">Refresh Stock data</a>
             {% endif %}
 
-            {% if stock.latest_data.change_perc > 0 %}
-            <p class="lead">{{ stock.latest_data.adj_close }}
+            {% if stock_data.change_perc > 0 %}
+            <p class="lead">{{ stock_data.adj_close }}
                 <small class="text-success">{{ stock_data.change_perc }}% <i class="fas fa-sort-up"></i></small>
             </p>
             {% else %}
-            <p class="lead">{{ stock.latest_data.adj_close }}
+            <p class="lead">{{ stock_data.adj_close }}
                 <small class="text-danger">{{ stock_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
             </p>
             {% endif %}
