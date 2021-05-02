@@ -1,0 +1,4 @@
+cron:
+- description: "cron yaml testing"
+  url: /tasks/summary
+  schedule: every 24 hours
