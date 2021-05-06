@@ -4,7 +4,6 @@ steps:
 
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/$PROJECT_ID/${_SERVICE_NAME}"]
-    timeout: 1200s
 
   - name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -22,7 +21,6 @@ steps:
         "${PROJECT_ID}:${_DEPLOY_REGION}:artefactinstance",
         "--allow-unauthenticated",
       ]
-    timeout: 1200s
 
   - name: "gcr.io/google-appengine/exec-wrapper"
     args: [ "-i", "gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${SHORT_SHA}",
@@ -33,3 +31,5 @@ steps:
     args: [ "-i", "gcr.io/$PROJECT_ID/${_SERVICE_NAME}:${SHORT_SHA}",
             "-s", "${PROJECT_ID}:${_DEPLOY_REGION}:artefactinstance",
             "--", "python", "manage.py", "collectstatic", "--no-input" ]
+
+timeout: 1800s
