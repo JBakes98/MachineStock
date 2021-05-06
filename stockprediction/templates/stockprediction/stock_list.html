@@ -41,7 +41,7 @@
             {% endif %}
             {% if stock.refresh %}
             <td>
-                <a href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                     <i class="fas fa-sync"></i>
                 </a>
             </td>

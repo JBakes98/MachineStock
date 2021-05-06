@@ -7,24 +7,31 @@
             <h1 class="display-4">
                 <span>{{ stock.name }}</span>
                 {% if stock.latest_data.change_perc > 0 %}
-                    <span class="lead">{{ stock.latest_data.adj_close }}
-                    <small class="text-success">{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-up"></i></small>
+                <span class="lead">{{ stock.latest_data.adj_close }}
+                    <small class="text-success">{{ stock.latest_data.change_perc }}% <i
+                            class="fas fa-sort-up"></i></small>
                     </span>
                 {% elif stock.latest_data.change_perc == 0 %}
-                    <span class="lead">{{ stock.latest_data.adj_close }}
+                <span class="lead">{{ stock.latest_data.adj_close }}
                     <small>{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
                     </span>
                 {% else %}
-                    <span class="lead">{{ stock.latest_data.adj_close }}
-                    <small class="text-danger">{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
+                <span class="lead">{{ stock.latest_data.adj_close }}
+                    <small class="text-danger">{{ stock.latest_data.change_perc }}% <i
+                            class="fas fa-sort-down"></i></small>
                     </span>
                 {% endif %}
-            </h1>
 
-            {% if stock.refresh %}
-            <a class="btn btn-primary btn-lg" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">Refresh Stock
-                data</a>
-            {% endif %}
+                {% if stock.refresh %}
+                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                    <i class="fas fa-sync"></i>
+                </a>
+                {% else %}
+                <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                    <i class="fas fa-sync"></i>
+                </a>
+                {% endif %}
+            </h1>
         </div>
     </div>
 
