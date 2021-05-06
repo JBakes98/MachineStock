@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-2">
+<div class="container mt-2 bg-light">
     <div class="jumbotron jumbotron-fluid">
         <div class="container-fluid">
             <h1 class="display-4">
@@ -47,6 +47,24 @@
         {{ ti_chart|safe }}
         {% else %}
         <p>Chart cannot be displayed</p>
+        {% endif %}
+    </div>
+
+    <div class="row mt-5 ">
+        <h4 class="display-4">Machine Learning Test Predictions</h4>
+        {% if ml_test_chart %}
+        {{ ml_test_chart|safe }}
+        {% else %}
+        <p>Predictions could not be shown</p>
+        {% endif %}
+    </div>
+
+    <div class="row mt-5 ">
+        <h4 class="display-4">Machine Learning Future Predictions</h4>
+        {% if ml_future_chart %}
+        {{ ml_future_chart|safe }}
+        {% else %}
+        <p>Predictions could not be shown</p>
         {% endif %}
     </div>
 

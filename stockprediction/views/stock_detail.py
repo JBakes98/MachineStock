@@ -22,6 +22,6 @@ class StockDetail(DetailView):
 
         context = super(StockDetail, self).get_context_data(**kwargs)
         context['stock_data'] = self.object.latest_data
-        context['ti_chart'] = self.object.plot_technical_indicators()
+        context['ti_chart'], context['ml_test_chart'], context['ml_future_chart'] = self.object.get_charts()
 
         return context
