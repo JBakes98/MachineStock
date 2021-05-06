@@ -6,7 +6,6 @@ import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Figure
 from .exchange import Exchange
-from stockprediction.utils.chart_utils import get_layout
 from stockprediction.utils import date_utils, chart_utils
 
 
