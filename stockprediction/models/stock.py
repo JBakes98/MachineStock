@@ -1,6 +1,7 @@
 # noinspection PyInterpreter
 import datetime
 from django.db import models
+from django.db.models import F
 import numpy as np
 import pandas as pd
 from plotly.offline import plot
