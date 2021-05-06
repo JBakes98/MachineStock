@@ -36,7 +36,7 @@ class Stock(models.Model):
         return dataset
 
     def refresh(self):
-        data = self.latest_data()
+        data = self.latest_data
         return data.date.date() != latest_weekday
 
     def plot_technical_indicators(self, dataset: pd.DataFrame = None) -> Figure:
