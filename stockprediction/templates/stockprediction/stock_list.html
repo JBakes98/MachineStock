@@ -18,6 +18,7 @@
             <th scope="col">Exchange</th>
             <th scope="col">Latest Price</th>
             <th scope="col">Change %</th>
+            <th scope="col">Refresh</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,19 @@
             {% else %}
             <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
             <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-down"></i></td>
+            {% endif %}
+            {% if refresh %}
+            <td>
+                <a href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                    <i class="fas fa-sync"></i>
+                </a>
+            </td>
+            {% else %}
+            <td>
+                <a class="disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                    <i class="fas fa-sync"></i>
+                </a>
+            </td>
             {% endif %}
         </tr>
         {% endfor %}
