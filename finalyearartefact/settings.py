@@ -26,10 +26,8 @@ env.read_env(io.StringIO(payload))
 
 # Setting this value from django-environ
 SECRET_KEY = env("SECRET_KEY")
-
 # Allow all hosts to access Django site
 ALLOWED_HOSTS = ["*"]
-
 # Default false. True allows default landing pages to be visible
 DEBUG = env("DEBUG")
 

@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Stock Prediction</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/1b5d0c64b3.js" crossorigin="anonymous"></script>
+    <script src="{% static  'stockprediction/js/page.js' %}"></script>
 </head>
-<body>
+<body class="bg-light">
 
 {% include "navbar.html" %}
 {% include "toast.html" %}
@@ -17,53 +20,7 @@
 
 {% endblock %}
 
-<script>
-var xmlHttp = null;
-
-function refreshStockData(callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = processRequest;
-    xmlHttp.open("GET", "stocks/collect-stock-data-endpoint/", true); // true for asynchronous
-    xmlHttp.send(null);
-
-    $(document).ready(function() {
-                $(".toast .toast-body").html("Collecting latest Stock data, this may take a few minutes...");
-                $(".toast").toast("show");
-                });
-}
-
-function processRequest() {
-   $(document).ready(function() {
-                $(".toast").toast("show");
-                });
-}
-
-function checkTime(i) {
-    if (i < 10) {
-        i = "0" + i;
-    }
-    return i;
-}
-
-function startTime() {
-    var today = new Date();
-    var D = today.getDate();
-    var M = today.getMonth();
-    var Y = today.getFullYear();
-    var h = today.getHours();
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    // add a zero in front of numbers<10
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('time').innerHTML = D + "-" + M + "-" +  Y + " " + h + ":" + m + ":" + s;
-    t = setTimeout(function () {
-        startTime()
-    }, 500);
-}
-startTime();
-</script>
-
 </body>
 </html>
+
+
