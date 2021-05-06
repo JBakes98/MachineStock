@@ -13,13 +13,13 @@ from pytorch_forecasting.metrics import (
 )
 
 
-def plot_tech_indicators(dataset: pd.DataFrame):
+def plot_tech_indicators(dataset: pd.DataFrame, stock: str):
     # Replace 0 with Nan so indicators such as ma that don't have a value
     # until 7 days of data don't display inaccurate data
     dataset.replace(0, np.nan, inplace=True)
 
     trace1 = {
-        'name': self.ticker,
+        'name': stock,
         'type': 'candlestick',
         'x': dataset['date'],
         'yaxis': 'y2',
