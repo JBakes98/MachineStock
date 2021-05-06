@@ -30,7 +30,15 @@ class Stock(models.Model):
         """ Get all of the Stocks related data and return it as a DataFrame"""
         from .stock_data import StockData
 
-        dataset = pd.DataFrame.from_records(StockData.objects.filter(stock=self).values())
+        dataset = pd.DataFrame.from_records(
+            StockData.objects.select_related('stock').annotate(
+                ticker=F('stock__ticker'), exchange=F('stock__exchange__symbol')
+            ).values('date', 'ticker', 'exchange', 'high', 'low', 'open', 'close', 'adj_close', 'volume',
+                     'dividend_amount',
+                     'change', 'change_perc', 'ma7', 'ma21', 'ema26', 'ema12', 'MACD', 'sd20', 'upper_band',
+                     'lower_band', 'ema', 'momentum', 'log_momentum')
+        )
+
         # If there is not data found return a value error
         if dataset.empty:
             return ValueError
