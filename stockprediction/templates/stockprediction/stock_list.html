@@ -32,14 +32,14 @@
             {% if stock.latest_data.change_perc > 0 %}
             <td class="text-success">{{ stock.latest_data.adj_close }}</td>
             <td class="text-success">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-up"></i></td>
-            {% elif stock.latest_data.change_perc == 0%}
-            <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
-            <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-circle"></i></td>
+            {% elif stock.latest_data.change_perc == 0 %}
+            <td>{{ stock.latest_data.adj_close }}</td>
+            <td>{{ stock.latest_data.change_perc}} <i class="fas fa-circle"></i></td>
             {% else %}
             <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
             <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-down"></i></td>
             {% endif %}
-            {% if refresh %}
+            {% if stock.refresh %}
             <td>
                 <a href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                     <i class="fas fa-sync"></i>
