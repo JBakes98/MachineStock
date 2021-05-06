@@ -1,4 +1,5 @@
 # noinspection PyInterpreter
+import datetime
 from django.db import models
 import numpy as np
 import pandas as pd
