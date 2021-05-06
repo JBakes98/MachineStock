@@ -6,6 +6,7 @@ from plotly.offline import plot
 from plotly.graph_objs import Figure
 from .exchange import Exchange
 from stockprediction.utils.chart_utils import get_layout
+from stockprediction.utils import date_utils
 
 
 class Stock(models.Model):
@@ -37,6 +38,7 @@ class Stock(models.Model):
 
     def refresh(self):
         data = self.latest_data
+        latest_weekday = date_utils.prev_weekday(datetime.date.today())
         return data.date.date() != latest_weekday
 
     def plot_technical_indicators(self, dataset: pd.DataFrame = None) -> Figure:

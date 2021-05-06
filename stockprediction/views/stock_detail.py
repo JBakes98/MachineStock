@@ -21,9 +21,7 @@ class StockDetail(DetailView):
         """
 
         context = super(StockDetail, self).get_context_data(**kwargs)
-        latest_weekday = date_utils.prev_weekday(datetime.date.today())
         context['stock_data'] = self.object.latest_data
-        # context['refresh'] = self.object.refresh
         context['ti_chart'] = self.object.plot_technical_indicators()
 
         return context
