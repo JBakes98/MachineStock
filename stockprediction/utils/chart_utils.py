@@ -3,6 +3,7 @@ from plotly.graph_objects import Figure
 
 from typing import Any, Dict, List
 import numpy as np
+import pandas as pd
 import torch
 from torch.nn.utils import rnn
 from pytorch_forecasting.metrics import (
