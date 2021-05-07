@@ -166,7 +166,7 @@ class StockMachineLearning:
         file_path = os.path.join(module_dir, 'models/tft-model')
 
         # If no saved model is found, train the model
-        if not file_path.exists():
+        if not os.path.exists(file_path):
             self.train_model()
 
         # Load the model from the save
