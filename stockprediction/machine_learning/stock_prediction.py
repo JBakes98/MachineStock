@@ -6,7 +6,7 @@ from pytorch_forecasting import Baseline, SMAPE, TemporalFusionTransformer, Quan
 from pytorch_forecasting.data import TimeSeriesDataSet
 from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
 
-from stock_prediction.charting import plot_prediction
+from stockprediction.charting import plot_prediction
 
 
 class StockMachineLearning:
