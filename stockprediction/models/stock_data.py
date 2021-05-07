@@ -34,6 +34,7 @@ class StockData(models.Model):
     close = models.DecimalField(max_digits=15, decimal_places=4, default=Decimal(0.00))
     adj_close = models.DecimalField(max_digits=15, decimal_places=4, default=Decimal(0.00))
     volume = models.BigIntegerField(blank=True, null=True)
+    dividend_amount = models.DecimalField(max_digits=15, decimal_places=4, default=Decimal(0.00))
 
     # These values are calculated for the
     change = models.DecimalField(max_digits=15, decimal_places=4, default=Decimal(0.00))
