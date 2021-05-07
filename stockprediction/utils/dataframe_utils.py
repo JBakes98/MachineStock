@@ -34,6 +34,8 @@ def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str) -> pd.DataFr
 
 
 def format_stock_dataset_for_ml(dataset: pd.DataFrame):
+    dataset.fillna(value=0, inplace=True)
+
     dataset['ticker'] = dataset['ticker'].astype('category')
     dataset['exchange'] = dataset['exchange'].astype('category')
     dataset['day'] = dataset['date'].dt.day_name()
@@ -65,7 +67,5 @@ def format_stock_dataset_for_ml(dataset: pd.DataFrame):
     # Group by ticker and sort by date and increment by 1 to
     # denote order of time series
     dataset['time_idx'] = dataset.sort_values(['date'], ascending=True).groupby(['ticker']).cumcount() + 1
-
-    dataset.fillna(value=0, inplace=True)
 
     return dataset
