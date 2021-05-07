@@ -84,7 +84,7 @@ class Stock(models.Model):
 
     def get_charts(self):
         from stockprediction.machine_learning import StockMachineLearning
-        from stockprediction.utils import stock_utils
+        from stockprediction.utils import stock_utils, chart_utils
 
         dataset = self.get_data()
         ti_plot = chart_utils.plot_tech_indicators(dataset, self.ticker)
