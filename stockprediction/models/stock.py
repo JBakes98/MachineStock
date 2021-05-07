@@ -31,6 +31,24 @@ class Stock(models.Model):
         from .stock_data import StockData
 
         dataset = pd.DataFrame.from_records(
+            StockData.objects.filter(stock=self).select_related('stock').annotate(
+                ticker=F('stock__ticker'), exchange=F('stock__exchange__symbol')
+            ).values('date', 'ticker', 'exchange', 'high', 'low', 'open', 'close', 'adj_close', 'volume',
+                     'dividend_amount',
+                     'change', 'change_perc', 'ma7', 'ma21', 'ema26', 'ema12', 'MACD', 'sd20', 'upper_band',
+                     'lower_band', 'ema', 'momentum', 'log_momentum')
+        )
+
+        # If there is not data found return a value error
+        if dataset.empty:
+            return ValueError
+        return dataset
+
+    def get_ml_data(self) -> pd.DataFrame:
+        """ Get all of the Stocks related data and return it as a DataFrame"""
+        from .stock_data import StockData
+
+        dataset = pd.DataFrame.from_records(
             StockData.objects.select_related('stock').annotate(
                 ticker=F('stock__ticker'), exchange=F('stock__exchange__symbol')
             ).values('date', 'ticker', 'exchange', 'high', 'low', 'open', 'close', 'adj_close', 'volume',
@@ -66,31 +84,33 @@ class Stock(models.Model):
 
     def get_test_predictions(self):
         from stockprediction.machine_learning import StockMachineLearning
-        from stockprediction.utils import stock_utils
+        from stockprediction.utils import dataframe_utils as df_utils
 
         dataset = self.get_data()
-        dataset = stock_utils.format_stock_dataset_for_ml(dataset)
+        dataset = df_utils.format_stock_dataset_for_ml(dataset)
         ml = StockMachineLearning(dataset, self.ticker)
         return ml.plot_test_predictions()
 
     def get_future_predictions(self):
         from stockprediction.machine_learning import StockMachineLearning
-        from stockprediction.utils import stock_utils
+        from stockprediction.utils import dataframe_utils as df_utils
 
         dataset = self.get_data()
-        dataset = stock_utils.format_stock_dataset_for_ml(dataset)
+        dataset = df_utils.format_stock_dataset_for_ml(dataset)
         ml = StockMachineLearning(dataset, self.ticker)
         return ml.plot_future_predictions()
 
     def get_charts(self):
         from stockprediction.machine_learning import StockMachineLearning
-        from stockprediction.utils import stock_utils, chart_utils
+        from stockprediction.utils import chart_utils
+        from stockprediction.utils import dataframe_utils as df_utils
 
         dataset = self.get_data()
         ti_plot = chart_utils.plot_tech_indicators(dataset, self.ticker)
 
-        dataset = stock_utils.format_stock_dataset_for_ml(dataset)
-        ml = StockMachineLearning(dataset, self.ticker)
+        ml_dataset = self.get_ml_data()
+        ml_dataset = df_utils.format_stock_dataset_for_ml(dataset)
+        ml = StockMachineLearning(ml_dataset, self.ticker)
         test_plot = ml.plot_test_predictions()
         fut_plot = ml.plot_future_predictions
 
