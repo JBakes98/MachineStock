@@ -70,7 +70,7 @@ class Stock(models.Model):
 
         dataset = self.get_data()
         dataset = stock_utils.format_stock_dataset_for_ml(dataset)
-        ml = StockMachineLearning(dataset)
+        ml = StockMachineLearning(dataset, self.ticker)
         return ml.plot_test_predictions()
 
     def get_future_predictions(self):
@@ -79,7 +79,7 @@ class Stock(models.Model):
 
         dataset = self.get_data()
         dataset = stock_utils.format_stock_dataset_for_ml(dataset)
-        ml = StockMachineLearning(dataset)
+        ml = StockMachineLearning(dataset, self.ticker)
         return ml.plot_future_predictions()
 
     def get_charts(self):
@@ -90,7 +90,7 @@ class Stock(models.Model):
         ti_plot = chart_utils.plot_tech_indicators(dataset, self.ticker)
 
         dataset = stock_utils.format_stock_dataset_for_ml(dataset)
-        ml = StockMachineLearning(dataset)
+        ml = StockMachineLearning(dataset, self.ticker)
         test_plot = ml.plot_test_predictions()
         fut_plot = ml.plot_future_predictions
 

@@ -6,7 +6,7 @@ from pytorch_forecasting import Baseline, SMAPE, TemporalFusionTransformer, Quan
 from pytorch_forecasting.data import TimeSeriesDataSet
 from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
 
-from stockprediction.charting import plot_prediction
+from stockprediction.utils import chart_utils
 
 
 class StockMachineLearning:
@@ -184,7 +184,7 @@ class StockMachineLearning:
             return_x=True
         )
 
-        plot = plot_prediction(x, raw_predictions, idx=0)
+        plot = chart_utils.plot_prediction(x, raw_predictions, idx=0)
 
         return plot
 
@@ -208,7 +208,7 @@ class StockMachineLearning:
         new_prediction_data = pd.concat([encoder_data, decoder_data], ignore_index=True)
         new_raw_predictions, new_x = self.model.predict(new_prediction_data, mode='raw', return_x=True)
 
-        plot = plot_prediction(new_x, new_raw_predictions, idx=0, show_future_observed=False)
+        plot = chart_utils.plot_prediction(new_x, new_raw_predictions, idx=0, show_future_observed=False)
 
         return plot
 
