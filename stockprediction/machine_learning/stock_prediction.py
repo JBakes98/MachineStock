@@ -19,7 +19,9 @@ class StockMachineLearning:
                  epochs=100
                  ):
         self.dataset = dataset
-        self.ticker = None
+        self.ticker = ticker
+        self.ticker = ticker
+        self.stock_idx = self._get_stock_idx()
         self.max_prediction_length = max_prediction_length
         self.max_encoder_length = max_encoder_length
         self.training_cutoff = self.dataset['time_idx'].max() - self.max_prediction_length
@@ -90,6 +92,17 @@ class StockMachineLearning:
             batch_size=self.batch_size * 10,
             num_workers=0
         )
+
+    def _get_stock_idx(self):
+        stocks = self.dataset.ticker.unique()
+        i = 0
+
+        while i < len(stocks):
+            if stocks[i] == self.ticker:
+                break
+            i += 1
+
+        return i
 
     def train_model(self):
         if self.training is None:
@@ -184,7 +197,7 @@ class StockMachineLearning:
             return_x=True
         )
 
-        plot = chart_utils.plot_prediction(x, raw_predictions, idx=0)
+        plot = chart_utils.plot_prediction(x, raw_predictions, idx=self.stock_idx)
 
         return plot
 
@@ -197,18 +210,23 @@ class StockMachineLearning:
         last_data = self.dataset[lambda x: x.time_idx == x.time_idx.max()]
 
         decoder_data = pd.concat(
-            [last_data.assign(date=lambda x: x.date + pd.offsets.MonthBegin(i)) for i in
+            [last_data.assign(date=lambda x: x.date + 0 * BDay()) for _ in
              range(1, self.max_prediction_length + 1)],
             ignore_index=True
         )
 
-        decoder_data['time_idx'] = decoder_data['date'].dt.year * 12 + decoder_data['date'].dt.month
+        decoder_data['time_idx'] = decoder_data.sort_values(['date'], ascending=True).groupby(['ticker']).cumcount() + 1
         decoder_data['time_idx'] += encoder_data['time_idx'].max() + 1 - decoder_data['time_idx'].min()
+
+        decoder_data['month'] = decoder_data['date'].dt.strftime('%B')
+        decoder_data['month'] = decoder_data['month'].astype('category')
+        decoder_data['day'] = decoder_data['date'].dt.day_name()
+        decoder_data['day'] = decoder_data['day'].astype('category')
 
         new_prediction_data = pd.concat([encoder_data, decoder_data], ignore_index=True)
         new_raw_predictions, new_x = self.model.predict(new_prediction_data, mode='raw', return_x=True)
 
-        plot = chart_utils.plot_prediction(new_x, new_raw_predictions, idx=0, show_future_observed=False)
+        plot = chart_utils.plot_prediction(new_x, new_raw_predictions, idx=self.stock_idx, show_future_observed=False)
 
         return plot
 

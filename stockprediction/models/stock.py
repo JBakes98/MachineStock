@@ -86,7 +86,7 @@ class Stock(models.Model):
         from stockprediction.machine_learning import StockMachineLearning
         from stockprediction.utils import dataframe_utils as df_utils
 
-        dataset = self.get_data()
+        dataset = self.get_ml_data()
         dataset = df_utils.format_stock_dataset_for_ml(dataset)
         ml = StockMachineLearning(dataset, self.ticker)
         return ml.plot_test_predictions()
@@ -95,7 +95,7 @@ class Stock(models.Model):
         from stockprediction.machine_learning import StockMachineLearning
         from stockprediction.utils import dataframe_utils as df_utils
 
-        dataset = self.get_data()
+        dataset = self.get_ml_data()
         dataset = df_utils.format_stock_dataset_for_ml(dataset)
         ml = StockMachineLearning(dataset, self.ticker)
         return ml.plot_future_predictions()
