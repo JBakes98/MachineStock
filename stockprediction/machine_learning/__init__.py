@@ -1,1 +1,1 @@
-from .stockprediction import StockMachineLearning
+from .stock_prediction import StockMachineLearning
