@@ -34,20 +34,20 @@
             <td class="text-success">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-up"></i></td>
             {% elif stock.latest_data.change_perc == 0 %}
             <td>{{ stock.latest_data.adj_close }}</td>
-            <td>{{ stock.latest_data.change_perc}} <i class="fas fa-circle"></i></td>
+            <td>{{ stock.latest_data.change_perc}} <i class="far fa-window-minimize"></i></td>
             {% else %}
             <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
             <td class="text-danger">{{ stock.latest_data.change_perc}} <i class="fas fa-angle-down"></i></td>
             {% endif %}
             {% if stock.refresh %}
             <td>
-                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                     <i class="fas fa-sync"></i>
                 </a>
             </td>
             {% else %}
             <td>
-                <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                     <i class="fas fa-sync"></i>
                 </a>
             </td>
