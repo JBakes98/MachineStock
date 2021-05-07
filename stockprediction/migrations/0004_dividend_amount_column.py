@@ -5,7 +5,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('stock_prediction', '0003_stock_data'),
+        ('stockprediction', '0003_stock_data'),
     ]
 
     operations = [
