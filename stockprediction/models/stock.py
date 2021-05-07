@@ -7,7 +7,6 @@ import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Figure
 from .exchange import Exchange
-from stockprediction.utils import date_utils, chart_utils, stock_utils
 
 
 class Stock(models.Model):
@@ -46,11 +45,15 @@ class Stock(models.Model):
         return dataset
 
     def refresh(self):
+        from stockprediction.utils import date_utils
+
         data = self.latest_data
         latest_weekday = date_utils.prev_weekday(datetime.date.today())
         return data.date.date() != latest_weekday
 
     def plot_technical_indicators(self, dataset: pd.DataFrame = None) -> Figure:
+        from stockprediction.utils import chart_utils
+
         """ Create a Plotly Figure of the Stocks technical indicators
 
         This method creates a chart of the Stocks data on a Plotly figure
@@ -80,6 +83,9 @@ class Stock(models.Model):
         return ml.plot_future_predictions()
 
     def get_charts(self):
+        from stock_prediction.machine_learning import StockMachineLearning
+        from stock_prediction.utils import stock_utils
+
         dataset = self.get_data()
         ti_plot = chart_utils.plot_tech_indicators(dataset, self.ticker)
 
@@ -88,4 +94,4 @@ class Stock(models.Model):
         test_plot = ml.plot_test_predictions()
         fut_plot = ml.plot_future_predictions
 
-        return  ti_plot, test_plot, fut_plot
+        return ti_plot, test_plot, fut_plot
