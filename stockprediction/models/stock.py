@@ -207,7 +207,7 @@ class Stock(models.Model):
         from stockprediction.utils import dataframe_utils as df_utils
 
         dataset = self.get_data()
-        ti_plot = self.plot_tech_indicators()
+        ti_plot = self.plot_technical_indicators()
 
         ml_dataset = self.get_ml_data()
         ml_dataset = df_utils.format_stock_dataset_for_ml(dataset)

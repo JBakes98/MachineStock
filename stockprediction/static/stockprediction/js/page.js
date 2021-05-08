@@ -4,7 +4,7 @@ function refreshStockData(callback)
 {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = processRequest;
-    xmlHttp.open("GET", "stocks/collect-stock-data-endpoint/", true); // true for asynchronous
+    xmlHttp.open("GET", "stocks/collect-stock-data-endpoint", true); // true for asynchronous
     xmlHttp.send(null);
 
     $(document).ready(function() {
