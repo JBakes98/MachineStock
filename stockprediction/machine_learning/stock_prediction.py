@@ -344,7 +344,7 @@ class StockMachineLearning:
                     'line': {'width': 1},
                     'name': 'Attention',
                     'type': 'scatter',
-                    'x': torch.arrange(-encoder_length, 0),
+                    'x': torch.arange(-encoder_length, 0),
                     'y': interpretation['attention'][self.stock_idx, :encoder_length].detatch().cpu(),
                     'legendgroup': 'Attention',
                     'marker': {'color': '#666666'},
