@@ -11,16 +11,16 @@
                 <hr class="my-4">
 
                 {% if data_refresh %}
-                <p>This prototype covers the 30 stocks included in the Dow Industrial Average Index.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="{% url 'stock-list' %}" role="button">View Stocks</a>
-                </p>
-                {% else %}
                 <p>This prototype covers the 30 stocks included in the Dow Industrial Average Index, the current
                 data appears to be out of sync. Do you wish to refresh it?</p>
                 <p class="lead">
                     <a class="btn btn-primary btn-lg" href="{% url 'stock-list' %}"  role="button">View Stocks</a>
                     <a class="btn btn-primary btn-lg" id="refreshData" href="#" role="button" onclick="refreshStockData()">Refresh Data</a>
+                </p>
+                {% else %}
+                <p>This prototype covers the 30 stocks included in the Dow Industrial Average Index.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="{% url 'stock-list' %}" role="button">View Stocks</a>
                 </p>
                 {% endif %}
             </div>
