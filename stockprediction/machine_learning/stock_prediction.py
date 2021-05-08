@@ -348,7 +348,7 @@ class StockMachineLearning:
                     'y': interpretation['attention'][self.stock_idx, :encoder_length].detach().cpu(),
                     'legendgroup': 'Attention',
                     'marker': {'color': '#666666'},
-                    'secondary_y': True,
+                    'yaxis': 'y2',
                 }
 
                 if show_future_observed:
