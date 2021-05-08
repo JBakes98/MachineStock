@@ -300,7 +300,12 @@ class StockMachineLearning:
                         "r": 30,
                         "t": 30,
                     },
-                    "yaxis2": {"domain": [0.2, 0.8]},
+                    "yaxis2": {
+                        "title": "Attention",
+                        "domain": [0.2, 0.8],
+                        "overlaying": "y",
+                        "side": "right",
+                    },
                     "plot_bgcolor": "rgb(250, 250, 250)"
                 }
 
