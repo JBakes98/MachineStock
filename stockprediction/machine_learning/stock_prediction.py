@@ -1,13 +1,27 @@
 import os
+from typing import Any, Dict, List
+
+import numpy as np
 import pandas as pd
 from pandas._libs.tslibs.offsets import BDay
+
 import torch
+from torch.nn.utils import rnn
 import pytorch_lightning as pl
 from pytorch_forecasting import Baseline, SMAPE, TemporalFusionTransformer, QuantileLoss, GroupNormalizer
 from pytorch_forecasting.data import TimeSeriesDataSet
 from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
+from pytorch_forecasting.metrics import (
+    Metric,
+    MultiLoss,
+    QuantileLoss,
+)
 
-from stockprediction.utils import chart_utils
+from plotly.offline import plot
+from plotly.graph_objects import Figure
+
+
+from stockprediction.utils import chart_utils, ml_utils
 
 
 class StockMachineLearning:
@@ -198,7 +212,7 @@ class StockMachineLearning:
             return_x=True
         )
 
-        plot = chart_utils.plot_prediction(x, raw_predictions, idx=self.stock_idx)
+        plot = self._plot_prediction(x, raw_predictions, idx=self.stock_idx)
 
         return plot
 
@@ -227,7 +241,127 @@ class StockMachineLearning:
         new_prediction_data = pd.concat([encoder_data, decoder_data], ignore_index=True)
         new_raw_predictions, new_x = self.model.predict(new_prediction_data, mode='raw', return_x=True)
 
-        plot = chart_utils.plot_prediction(new_x, new_raw_predictions, idx=self.stock_idx, show_future_observed=False)
+        plot = self._plot_prediction(new_x, new_raw_predictions, idx=self.stock_idx, show_future_observed=False)
 
         return plot
 
+    def _plot_prediction(self, x: Dict[str, torch.Tensor],
+                        out: Dict[str, torch.Tensor],
+                        idx: int = 0,
+                        show_future_observed: bool = True):
+        encoder_targets = ml_utils.to_list(x['encoder_target'])
+        decoder_targets = ml_utils.to_list(x['decoder_target'])
+
+        prediction_kwargs = {}
+        quantiles_kwargs = {}
+
+        y_raws = ml_utils.to_list(out['prediction'])
+        y_hats = ml_utils.to_list(ml_utils.to_prediction(out, **prediction_kwargs))
+        y_quantiles = ml_utils.to_list(ml_utils.to_quantiles(out, **quantiles_kwargs))
+
+        figs = []
+        for y_raw, y_hat, y_quantile, encoder_target, decoder_target in zip(
+                y_raws, y_hats, y_quantiles, encoder_targets, decoder_targets
+        ):
+            y_all = torch.cat([encoder_target[idx], decoder_target[idx]])
+            max_encoder_length = x['encoder_lengths'].max()
+            y = torch.cat(
+                (
+                    y_all[: x['encoder_lengths'][idx]],
+                    y_all[max_encoder_length: (max_encoder_length + x['decoder_lengths'][idx])],
+                ),
+            )
+
+            y_hat = y_hat.detach().cpu()[idx, : x['decoder_lengths'][idx]]
+            y_quantile = y_quantile.detach().cpu()[idx, : x['decoder_lengths'][idx]]
+            y_raw = y_raw.detach().cpu()[idx, : x['decoder_lengths'][idx]]
+
+            y = y.detach().cpu()
+
+            n_pred = y_hat.shape[0]
+            x_obs = np.arange(-(y.shape[0] - n_pred), 0)
+            x_pred = np.arange(n_pred)
+
+            interpretation = self.model.interpret_output(out)
+            encoder_length = x['encoder_lengths'][self.stock_idx]
+
+            # Plot observed history
+            if len(x_obs) > 0:
+                layout = {
+                    "title": {"text": "Machine Learning Prediction"},
+                    "xaxis": {"title": "Time Index"},
+                    "yaxis": {"title": "Adjusted Close ($)"},
+                    "legend": {
+                        "x": 0.3,
+                        "y": 0.9,
+                        "yanchor": "bottom",
+                        "orientation": "h"
+                    },
+                    "margin": {
+                        "b": 30,
+                        "l": 30,
+                        "r": 30,
+                        "t": 30,
+                    },
+                    "yaxis2": {"domain": [0.2, 0.8]},
+                    "plot_bgcolor": "rgb(250, 250, 250)"
+                }
+
+                trace1 = {
+                    'line': {'width': 1},
+                    'name': 'Observed',
+                    'type': 'scatter',
+                    'x': x_obs,
+                    'y': y[:-n_pred:],
+                    'legendgroup': 'Observed',
+                    'marker': {'color': '#000000'},
+                }
+                trace2 = {
+                    'line': {'width': 1},
+                    'name': 'Observed Future',
+                    'type': 'scatter',
+                    'x': x_pred,
+                    'y': y[-n_pred:],
+                    'legendgroup': 'Observed Prediction',
+                    'marker': {'color': '#000000'},
+                }
+                trace3 = {
+                    'line': {'width': 1},
+                    'name': 'Prediction',
+                    'type': 'scatter',
+                    'x': x_pred,
+                    'y': y_hat,
+                    'legendgroup': 'Prediction',
+                    'marker': {'color': '#FF0000'},
+                }
+                trace4 = {
+                    'line': {'width': 1},
+                    'name': 'Predicted Quantiles',
+                    'type': 'scatter',
+                    'x': x_pred,
+                    'y': y_quantile[:, y_quantile.shape[1] // 2],
+                    'legendgroup': 'Predicted Quantiles',
+                    'marker': {'color': '#FFA500'},
+                }
+                trace5 = {
+                    'line': {'width': 1},
+                    'name': 'Attention',
+                    'type': 'scatter',
+                    'x': torch.arrange(-encoder_length, 0),
+                    'y': interpretation['attention'][self.stock_idx, :encoder_length].detatch().cpu(),
+                    'legendgroup': 'Attention',
+                    'marker': {'color': '#666666'},
+                }
+
+                if show_future_observed:
+                    data = ([trace1, trace2, trace3, trace4, trace5])
+                else:
+                    data = ([trace1, trace3, trace4, trace5])
+
+                plot_div = plot(Figure(data=data, layout=layout), output_type='div')
+                figs.append(plot_div)
+
+        if isinstance(x['encoder_target'], (tuple, list)):
+            return figs
+        else:
+            return plot_div
