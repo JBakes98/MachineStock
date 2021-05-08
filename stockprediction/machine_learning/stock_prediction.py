@@ -18,7 +18,7 @@ from plotly.offline import plot
 from plotly.graph_objects import Figure
 
 
-from stockprediction.utils import chart_utils, ml_utils
+from stockprediction.utils import ml_utils
 
 
 class StockMachineLearning:
@@ -287,7 +287,13 @@ class StockMachineLearning:
                 layout = {
                     "title": {"text": "Machine Learning Prediction"},
                     "xaxis": {"title": "Time Index"},
-                    "yaxis": {"title": "Adjusted Close ($)"},
+                    "yaxis": {"title": "Adjusted Close"},
+                    "yaxis2": {
+                        "title": "Attention",
+                        "domain": [0.2, 0.8],
+                        "overlaying": "y",
+                        "side": "right",
+                    },
                     "legend": {
                         "x": 0.3,
                         "y": 0.9,
@@ -299,12 +305,6 @@ class StockMachineLearning:
                         "l": 30,
                         "r": 30,
                         "t": 30,
-                    },
-                    "yaxis2": {
-                        "title": "Attention",
-                        "domain": [0.2, 0.8],
-                        "overlaying": "y",
-                        "side": "right",
                     },
                     "plot_bgcolor": "rgb(250, 250, 250)"
                 }
@@ -352,7 +352,7 @@ class StockMachineLearning:
                     'x': torch.arange(-encoder_length, 0),
                     'y': interpretation['attention'][self.stock_idx, :encoder_length].detach().cpu(),
                     'legendgroup': 'Attention',
-                    'marker': {'color': '#666666'},
+                    'marker': {'color': '#aca4e0'},
                     'yaxis': 'y2',
                 }
 
