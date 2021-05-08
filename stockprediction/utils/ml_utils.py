@@ -1,3 +1,11 @@
+from typing import Any, Dict, List
+from pytorch_forecasting.metrics import (
+    Metric,
+    MultiLoss,
+    QuantileLoss,
+)
+
+
 def to_list(value: Any) -> List[Any]:
     """
     Convert value or list to list of values.

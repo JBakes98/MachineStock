@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, List
+from typing import Dict, List
 
 import numpy as np
 import pandas as pd
@@ -11,11 +11,8 @@ import pytorch_lightning as pl
 from pytorch_forecasting import Baseline, SMAPE, TemporalFusionTransformer, QuantileLoss, GroupNormalizer
 from pytorch_forecasting.data import TimeSeriesDataSet
 from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
-from pytorch_forecasting.metrics import (
-    Metric,
-    MultiLoss,
-    QuantileLoss,
-)
+from pytorch_forecasting.metrics import QuantileLoss
+
 
 from plotly.offline import plot
 from plotly.graph_objects import Figure
