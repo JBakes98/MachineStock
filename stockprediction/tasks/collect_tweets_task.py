@@ -1,6 +1,6 @@
 from django.conf import settings
 import tweepy
-from stockprediction.models import Tweet
+from stockprediction.models import Tweet, Stock
 
 
 def collect_tweets(ticker):
@@ -8,6 +8,7 @@ def collect_tweets(ticker):
     auth.set_access_token(settings.TWITTER_TOKEN_KEY, settings.TWITTER_SECRET_TOKEN_KEY)
 
     api = tweepy.API(auth)
+    stock = Stock.objects.get(ticker=ticker)
     collected_tweets = api.search(q=ticker, result_type='popular', count=100)
 
     for tweet in collected_tweets:
