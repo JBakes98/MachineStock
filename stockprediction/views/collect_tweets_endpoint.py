@@ -9,7 +9,7 @@ from stockprediction.tasks import collect_tweets
 
 
 class CollectTweetsEndpoint(View):
-    """ View that acts as an endpoint to trigger Stock data collection """
+    """ View that acts as an endpoint to trigger Tweet collection """
 
     def get(self, request, stock=None):
         if stock is None:
@@ -18,7 +18,7 @@ class CollectTweetsEndpoint(View):
 
             for stock in stocks:
                 collect_tweets(stock.ticker)
-            response_data['response'] = 'Collected Stock data'
+            response_data['response'] = 'Collected Tweets'
             return HttpResponse(json.dumps(response_data), status='200')
 
         else:

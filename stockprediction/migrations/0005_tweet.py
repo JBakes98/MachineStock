@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('friends_count', models.BigIntegerField()),
                 ('favourites_count', models.BigIntegerField()),
                 ('retweet_count', models.BigIntegerField()),
-                ('stock', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stock_prediction.stock')),
+                ('stock', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stockprediction.stock')),
             ],
             options={
                 'verbose_name_plural': 'Tweets',

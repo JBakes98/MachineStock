@@ -6,7 +6,7 @@ from django.views import View
 
 from stockprediction.models import Stock
 from stockprediction.tasks.collect_stock_data_task import collect_stock_data
-from stockprediction.tasks.save_stock_data_task import save_stock_data
+from stockprediction.tasks.save_stocks_task import save_stock_data
 
 
 class CollectStockDataEndpoint(View):
