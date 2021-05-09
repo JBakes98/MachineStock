@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db import IntegrityError
 import tweepy
 from stockprediction.models import Tweet, Stock
 
