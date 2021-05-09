@@ -1,4 +1,5 @@
 from django.conf import settings
+import tweepy
 
 
 def collect_tweets(ticker):
