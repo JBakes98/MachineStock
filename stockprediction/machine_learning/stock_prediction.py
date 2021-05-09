@@ -13,10 +13,8 @@ from pytorch_forecasting.data import TimeSeriesDataSet
 from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
 from pytorch_forecasting.metrics import QuantileLoss
 
-
 from plotly.offline import plot
 from plotly.graph_objects import Figure
-
 
 from stockprediction.utils import ml_utils
 
@@ -46,7 +44,7 @@ class StockMachineLearning:
         self.val_dataloader = None
         self.model = None  # Learning model that can be created or loaded
 
-    def create_time_series(self):
+    def create_time_series(self) -> None:
         self.training = TimeSeriesDataSet(
             self.dataset[lambda x: x.time_idx < self.training_cutoff],
             time_idx='time_idx',
@@ -85,7 +83,7 @@ class StockMachineLearning:
             add_encoder_length=True,
         )
 
-    def _create_validation_dataset(self):
+    def _create_validation_dataset(self) -> None:
         self.validation = TimeSeriesDataSet.from_dataset(
             self.training,
             self.dataset,
@@ -93,7 +91,7 @@ class StockMachineLearning:
             stop_randomization=True
         )
 
-    def _create_dataloaders(self):
+    def _create_dataloaders(self) -> None:
         self.train_dataloader = self.training.to_dataloader(
             train=True,
             batch_size=self.batch_size,
@@ -105,7 +103,7 @@ class StockMachineLearning:
             num_workers=0
         )
 
-    def _get_stock_idx(self):
+    def _get_stock_idx(self) -> int:
         stocks = self.dataset.ticker.unique()
         i = 0
 
@@ -116,7 +114,7 @@ class StockMachineLearning:
 
         return i
 
-    def train_model(self):
+    def train_model(self) -> None:
         if self.training is None:
             self.create_time_series()
         self._create_validation_dataset()
@@ -179,7 +177,7 @@ class StockMachineLearning:
         # Save the model to the models directory
         torch.save(best_tft, 'models/tft-model')
 
-    def load_model(self):
+    def load_model(self) -> None:
         if self.training is None:
             self.create_time_series()
         if self.validation is None:
@@ -198,7 +196,7 @@ class StockMachineLearning:
         tft = torch.load(file_path)
         self.model = tft
 
-    def plot_test_predictions(self):
+    def plot_test_predictions(self) -> Figure:
         # If learning model is not present load it
         if self.model is None:
             self.load_model()
@@ -213,7 +211,7 @@ class StockMachineLearning:
 
         return plot
 
-    def plot_future_predictions(self):
+    def plot_future_predictions(self) -> Figure:
         # Load model if not assigned
         if self.model is None:
             self.load_model()
@@ -242,10 +240,12 @@ class StockMachineLearning:
 
         return plot
 
-    def _plot_prediction(self, x: Dict[str, torch.Tensor],
-                        out: Dict[str, torch.Tensor],
-                        idx: int = 0,
-                        show_future_observed: bool = True):
+    def _plot_prediction(
+            self, x: Dict[str, torch.Tensor],
+            out: Dict[str, torch.Tensor],
+            idx: int = 0,
+            show_future_observed: bool = True
+    ) -> Figure:
         encoder_targets = ml_utils.to_list(x['encoder_target'])
         decoder_targets = ml_utils.to_list(x['decoder_target'])
 
@@ -283,87 +283,83 @@ class StockMachineLearning:
             encoder_length = x['encoder_lengths'][self.stock_idx]
 
             # Plot observed history
-            if len(x_obs) > 0:
-                layout = {
-                    "xaxis": {"title": "Time Index"},
-                    "yaxis": {"title": "Adjusted Close"},
-                    "yaxis2": {
-                        "title": "Attention",
-                        "domain": [0.2, 0.8],
-                        "overlaying": "y",
-                        "side": "right",
-                    },
-                    "legend": {
-                        "x": 0.3,
-                        "y": 0.9,
-                        "yanchor": "bottom",
-                        "orientation": "h"
-                    },
-                    "margin": {
-                        "b": 30,
-                        "l": 30,
-                        "r": 30,
-                        "t": 30,
-                    },
-                    "plot_bgcolor": "rgb(250, 250, 250)"
-                }
+            layout = {
+                "xaxis": {"title": "Time Index"},
+                "yaxis": {"title": "Adjusted Close"},
+                "yaxis2": {
+                    "title": "Attention",
+                    "domain": [0.2, 0.8],
+                    "overlaying": "y",
+                    "side": "right",
+                },
+                "legend": {
+                    "x": 0.3,
+                    "y": 0.9,
+                    "yanchor": "bottom",
+                    "orientation": "h"
+                },
+                "margin": {
+                    "b": 30,
+                    "l": 30,
+                    "r": 30,
+                    "t": 30,
+                },
+                "plot_bgcolor": "rgb(250, 250, 250)"
+            }
 
-                trace1 = {
-                    'line': {'width': 1},
-                    'name': 'Observed',
-                    'type': 'scatter',
-                    'x': x_obs,
-                    'y': y[:-n_pred:],
-                    'legendgroup': 'Observed',
-                    'marker': {'color': '#000000'},
-                }
-                trace2 = {
-                    'line': {'width': 1},
-                    'name': 'Observed Future',
-                    'type': 'scatter',
-                    'x': x_pred,
-                    'y': y[-n_pred:],
-                    'legendgroup': 'Observed Prediction',
-                    'marker': {'color': '#000000'},
-                }
-                trace3 = {
-                    'line': {'width': 1},
-                    'name': 'Prediction',
-                    'type': 'scatter',
-                    'x': x_pred,
-                    'y': y_hat,
-                    'legendgroup': 'Prediction',
-                    'marker': {'color': '#FF0000'},
-                }
-                trace4 = {
-                    'line': {'width': 1},
-                    'name': 'Predicted Quantiles',
-                    'type': 'scatter',
-                    'x': x_pred,
-                    'y': y_quantile[:, y_quantile.shape[1] // 2],
-                    'legendgroup': 'Predicted Quantiles',
-                    'marker': {'color': '#FFA500'},
-                }
-                trace5 = {
-                    'line': {'width': 1},
-                    'name': 'Attention',
-                    'type': 'scatter',
-                    'x': torch.arange(-encoder_length, 0),
-                    'y': interpretation['attention'][self.stock_idx, :encoder_length].detach().cpu(),
-                    'legendgroup': 'Attention',
-                    'marker': {'color': '#aca4e0'},
-                    'yaxis': 'y2',
-                }
+            trace1 = {
+                'line': {'width': 1},
+                'name': 'Observed',
+                'type': 'scatter',
+                'x': x_obs,
+                'y': y[:-n_pred:],
+                'legendgroup': 'Observed',
+                'marker': {'color': '#000000'},
+            }
+            trace2 = {
+                'line': {'width': 1},
+                'name': 'Observed Future',
+                'type': 'scatter',
+                'x': x_pred,
+                'y': y[-n_pred:],
+                'legendgroup': 'Observed Prediction',
+                'marker': {'color': '#000000'},
+            }
+            trace3 = {
+                'line': {'width': 1},
+                'name': 'Prediction',
+                'type': 'scatter',
+                'x': x_pred,
+                'y': y_hat,
+                'legendgroup': 'Prediction',
+                'marker': {'color': '#FF0000'},
+            }
+            trace4 = {
+                'line': {'width': 1},
+                'name': 'Predicted Quantiles',
+                'type': 'scatter',
+                'x': x_pred,
+                'y': y_quantile[:, y_quantile.shape[1] // 2],
+                'legendgroup': 'Predicted Quantiles',
+                'marker': {'color': '#FFA500'},
+            }
+            trace5 = {
+                'line': {'width': 1},
+                'name': 'Attention',
+                'type': 'scatter',
+                'x': torch.arange(-encoder_length, 0),
+                'y': interpretation['attention'][self.stock_idx, :encoder_length].detach().cpu(),
+                'legendgroup': 'Attention',
+                'marker': {'color': '#aca4e0'},
+                'yaxis': 'y2',
+            }
 
-                if show_future_observed:
-                    data = ([trace1, trace2, trace3, trace4, trace5])
-                else:
-                    data = ([trace1, trace3, trace4, trace5])
+            if show_future_observed:
+                data = ([trace1, trace2, trace3, trace4, trace5])
+            else:
+                data = ([trace1, trace3, trace4, trace5])
 
-                plot_div = plot(Figure(data=data, layout=layout), output_type='div')
-                figs.append(plot_div)
+            plot_div = plot(Figure(data=data, layout=layout), output_type='div')
+            figs.append(plot_div)
 
-        if isinstance(x['encoder_target'], (tuple, list)):
-            return figs
-        else:
             return plot_div

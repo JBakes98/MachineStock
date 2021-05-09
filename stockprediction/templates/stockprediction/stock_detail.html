@@ -3,13 +3,24 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-3 shadow min-vh-100 h-100 d-inline-block overflow-auto">
+    <div class="col-3 shadow min-vh-100 mh-100 d-inline-block overflow-auto">
         <h1 class="display-6 text-center">
             {{ stock.ticker }} Tweets
         </h1>
+        {% for tweet in tweets %}
+            <div class="card m-2">
+                <div class="card-header">
+                    {{ tweet.user_screen_name }}
+                    <small>{{ tweet.created_at }}</small>
+                </div>
+                <div class="card-body">
+                    <p>{{ tweet.text }}</p>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 
-    <div class="col-9 min-vh-100 h-100 d-inline-block overflow-auto pr-0">
+    <div class="col-9 min-vh-100 h-100 d-inline-block overflow-auto">
         <div class="container">
             <div class="row mt-2">
                 <div class="jumbotron jumbotron-fluid">

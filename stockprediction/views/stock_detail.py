@@ -23,5 +23,6 @@ class StockDetail(DetailView):
         context = super(StockDetail, self).get_context_data(**kwargs)
         context['stock_data'] = self.object.latest_data
         context['ti_chart'], context['ml_test_chart'], context['ml_future_chart'] = self.object.get_charts()
+        context['tweets'] = Tweet.objects.filter(stock=self.object)[:50]
 
         return context

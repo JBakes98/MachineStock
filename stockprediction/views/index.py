@@ -2,7 +2,7 @@ import datetime
 
 from django.views.generic import TemplateView
 
-from stockprediction.models import StockData
+from stockprediction.models import StockData, Tweet
 from stockprediction.utils import date_utils
 
 
@@ -25,9 +25,9 @@ class IndexView(TemplateView):
         context['top_winners'] = StockData.objects.filter(
             date=prev_weekday
         ).order_by('-date', '-change_perc')[:5]
-
         context['top_losers'] = StockData.objects.filter(
             date=prev_weekday
         ).order_by('-date', 'change_perc')[:5]
+        context['tweets'] = Tweet.objects.all()[:50]
 
         return context

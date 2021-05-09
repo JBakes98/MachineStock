@@ -11,4 +11,8 @@ urlpatterns = [
          name='collect-stocks-data-endpoint'),
     path('collect-stock-data-endpoint/<str:stock>/', views.CollectStockDataEndpoint.as_view(),
          name='collect-stock-data-endpoint'),
+    path('collect-tweets-endpoint/', views.CollectTweetsEndpoint.as_view(),
+         name='collect-stocks-tweets-endpoint'),
+    path('collect-tweets-endpoint/<str:stock>/', views.CollectTweetsEndpoint.as_view(),
+         name='collect-stock-tweets-endpoint'),
 ]
