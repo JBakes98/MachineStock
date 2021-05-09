@@ -3,15 +3,15 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-3 shadow h-100 overflow-auto">
+    <div class="col-3 shadow h-100 d-inline-block overflow-auto">
         <h1 class="display-6 text-center">
             {{ stock.ticker }} Tweets
         </h1>
     </div>
 
-    <div class="col-9 h-100 overflow-auto">
-        <div class="container mt-2">
-            <div class="jumbotron jumbotron-fluid shadow-sm">
+    <div class="col-9 h-100 d-inline-block overflow-auto">
+        <div class="container mt-2 shadow-sm">
+            <div class="jumbotron jumbotron-fluid">
                 <div class="container-fluid">
                     <h1 class="display-4">
                         <span>{{ stock.name }}</span>
@@ -55,7 +55,7 @@
 
             <hr>
 
-            <div class="row mt-5 shadow-sm">
+            <div class="row mt-5">
                 <h4 class="display-4">Technical Indicators</h4>
                 {% if ti_chart %}
                 {{ ti_chart|safe }}
@@ -64,7 +64,7 @@
                 {% endif %}
             </div>
 
-            <div class="row mt-5 shadow-sm">
+            <div class="row mt-5">
                 <h4 class="display-4">Machine Learning Test Predictions</h4>
                 {% if ml_test_chart %}
                 {{ ml_test_chart|safe }}
@@ -73,7 +73,7 @@
                 {% endif %}
             </div>
 
-            <div class="row mt-5 shadow-sm">
+            <div class="row mt-5">
                 <h4 class="display-4">Machine Learning Future Predictions</h4>
                 {% if ml_future_chart %}
                 {{ ml_future_chart|safe }}
