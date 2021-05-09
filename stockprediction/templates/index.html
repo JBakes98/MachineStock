@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="row">
-    <div class="col-2 shadow min-vh-100 h-100 d-inline-block overflow-auto" style="overflow: auto;">
-        <div class="container-fluid">
+<div class="container-fluid">
+    <div class="row">
+        <div class="overflow-auto col-2 shadow h-100 d-inline-block" style="overflow-x: auto;">
             <h1 class="display-6 text-center">Recent Tweets</h1>
             {% for tweet in tweets %}
             <div class="card m-2">
@@ -18,10 +17,8 @@
             </div>
             {% endfor %}
         </div>
-    </div>
 
-    <div class="col-10 min-vh-100 h-100 d-inline-block overflow-auto">
-        <div class="container">
+        <div class="col-10 h-100 d-inline-block overflow-auto">
             <div class="row mt-5 bg-light">
                 <div class="jumbotron shadow-sm">
                     <h1 class="display-4">Stock Learning</h1>

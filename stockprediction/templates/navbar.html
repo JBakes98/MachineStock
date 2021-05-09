@@ -19,11 +19,11 @@
           <ul class="dropdown-menu"  aria-labelledby="settingsDropdown">
             {% if data_refresh %}
               <li>
-                <a class="dropdown-item disabled" href="#" role="button" onclick="refreshStockData()">Refresh data</a>
+                <a class="dropdown-item" href="#" role="button" onclick="refreshStockData()">Refresh data</a>
               </li>
             {% else %}
               <li>
-                <a class="dropdown-item" href="#" role="button" onclick="refreshStockData()">Refresh data</a>
+                <a class="dropdown-item disabled" href="#" role="button" onclick="refreshStockData()">Refresh data</a>
               </li>
             {% endif %}
           </ul>
