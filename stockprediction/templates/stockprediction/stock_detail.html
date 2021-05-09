@@ -3,106 +3,102 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="container-fluid">
-            <div class="col-2 shadow d-inline-block overflow-auto">
-                <h1 class="display-6 text-center">
-                    {{ stock.ticker }} Tweets
-                </h1>
-                {% for tweet in tweets %}
-                <div class="card m-2">
-                    <div class="card-header">
-                        {{ tweet.user_screen_name }}
-                        <small>{{ tweet.created_at }}</small>
-                    </div>
-                    <div class="card-body">
-                        <p>{{ tweet.text }}</p>
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
-                            </div>
-                            <div class="col">
-                                <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
-                            </div>
+        <div class="col-2 shadow d-inline-block overflow-auto">
+            <h1 class="display-6 m-1">
+                {{ stock.ticker }} Tweets
+            </h1>
+            {% for tweet in tweets %}
+            <div class="card m-2">
+                <div class="card-header">
+                    {{ tweet.user_screen_name }}
+                    <small>{{ tweet.created_at }}</small>
+                </div>
+                <div class="card-body">
+                    <p>{{ tweet.text }}</p>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
+                        </div>
+                        <div class="col">
+                            <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
 
         <div class="col-10 d-inline-block overflow-auto">
-            <div class="container">
-                <div class="row mt-2">
-                    <div class="jumbotron jumbotron-fluid">
-                        <div class="container-fluid">
-                            <h1 class="display-4">
-                                <span>{{ stock.name }}</span>
+            <div class="row mt-2">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container-fluid">
+                        <h1 class="display-4">
+                            <span>{{ stock.name }}</span>
 
-                                {% if stock.latest_data.change_perc > 0 %}
-                                <span class="lead">{{ stock.latest_data.adj_close }}
+                            {% if stock.latest_data.change_perc > 0 %}
+                            <span class="lead">{{ stock.latest_data.adj_close }}
                             <small class="text-success">{{ stock.latest_data.change_perc }}%
                                 <i class="fas fa-sort-up"></i>
                             </small>
                         </span>
-                                {% elif stock.latest_data.change_perc == 0 %}
-                                <span class="lead">{{ stock.latest_data.adj_close }}
+                            {% elif stock.latest_data.change_perc == 0 %}
+                            <span class="lead">{{ stock.latest_data.adj_close }}
                             <small>{{ stock.latest_data.change_perc }}%
                                 <i class="fas fa-sort-down"></i>
                             </small>
                         </span>
-                                {% else %}
-                                <span class="lead">{{ stock.latest_data.adj_close }}
+                            {% else %}
+                            <span class="lead">{{ stock.latest_data.adj_close }}
                             <small class="text-danger">{{ stock.latest_data.change_perc }}%
                                 <i class="fas fa-sort-down"></i>
                             </small>
                         </span>
-                                {% endif %}
+                            {% endif %}
 
-                                {% if stock.refresh %}
-                                <span class="lead">
+                            {% if stock.refresh %}
+                            <span class="lead">
                             <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                                 <i class="fas fa-sync"></i>
                             </a>
                         </span>
-                                {% else %}
-                                <span class="lead">
+                            {% else %}
+                            <span class="lead">
                             <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                                 <i class="fas fa-sync"></i>
                             </a>
                         </span>
-                                {% endif %}
-                            </h1>
-                        </div>
+                            {% endif %}
+                        </h1>
                     </div>
                 </div>
-                <hr>
+            </div>
+            <hr>
 
-                <div class="row mt-5 shadow">
-                    <h4 class="display-4">Technical Indicators</h4>
-                    {% if ti_chart %}
-                    {{ ti_chart|safe }}
-                    {% else %}
-                    <p>Chart cannot be displayed</p>
-                    {% endif %}
-                </div>
+            <div class="row mt-5 shadow">
+                <h4 class="display-4">Technical Indicators</h4>
+                {% if ti_chart %}
+                {{ ti_chart|safe }}
+                {% else %}
+                <p>Chart cannot be displayed</p>
+                {% endif %}
+            </div>
 
-                <div class="row mt-5 shadow">
-                    <h4 class="display-4">Machine Learning Test Predictions</h4>
-                    {% if ml_test_chart %}
-                    {{ ml_test_chart|safe }}
-                    {% else %}
-                    <p>Predictions could not be shown</p>
-                    {% endif %}
-                </div>
+            <div class="row mt-5 shadow">
+                <h4 class="display-4">Machine Learning Test Predictions</h4>
+                {% if ml_test_chart %}
+                {{ ml_test_chart|safe }}
+                {% else %}
+                <p>Predictions could not be shown</p>
+                {% endif %}
+            </div>
 
-                <div class="row mt-5 shadow">
-                    <h4 class="display-4">Machine Learning Future Predictions</h4>
-                    {% if ml_future_chart %}
-                    {{ ml_future_chart|safe }}
-                    {% else %}
-                    <p>Predictions could not be shown</p>
-                    {% endif %}
-                </div>
+            <div class="row mt-5 shadow">
+                <h4 class="display-4">Machine Learning Future Predictions</h4>
+                {% if ml_future_chart %}
+                {{ ml_future_chart|safe }}
+                {% else %}
+                <p>Predictions could not be shown</p>
+                {% endif %}
             </div>
         </div>
     </div>

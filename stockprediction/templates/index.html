@@ -3,118 +3,114 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="container-fluid">
-            <div class="overflow-auto col-2 shadow d-inline-block">
-                <h1 class="display-6 text-center">Recent Tweets</h1>
-                {% for tweet in tweets %}
-                <div class="card m-2">
-                    <div class="card-header">
-                        {{ tweet.user_screen_name }}
-                        <small>{{ tweet.created_at }}</small>
-                    </div>
-                    <div class="card-body">
-                        <p>{{ tweet.text }}</p>
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
-                            </div>
-                            <div class="col">
-                                <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
-                            </div>
+        <div class="overflow-auto col-2 shadow d-inline-block">
+            <h1 class="display-6 text-center">Recent Tweets</h1>
+            {% for tweet in tweets %}
+            <div class="card m-2">
+                <div class="card-header">
+                    {{ tweet.user_screen_name }}
+                    <small>{{ tweet.created_at }}</small>
+                </div>
+                <div class="card-body">
+                    <p>{{ tweet.text }}</p>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
+                        </div>
+                        <div class="col">
+                            <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
 
-        <div class="container-fluid">
-            <div class="col-10 d-inline-block overflow-auto">
-                <div class="row mt-5 bg-light">
-                    <div class="jumbotron shadow-sm">
-                        <h1 class="display-4">Stock Learning</h1>
-                        <p class="lead">
-                            This is my final years project artefact, its uses machine learning to predict the future
-                            price movement of stocks
-                        </p>
-                        <hr class="my-4">
+        <div class="col-10 d-inline-block overflow-auto">
+            <div class="row mt-5 bg-light">
+                <div class="jumbotron shadow-sm">
+                    <h1 class="display-4">Stock Learning</h1>
+                    <p class="lead">
+                        This is my final years project artefact, its uses machine learning to predict the future
+                        price movement of stocks
+                    </p>
+                    <hr class="my-4">
 
-                        {% if data_refresh %}
-                        <p>
-                            This prototype covers the 30 stocks included in the Dow Industrial Average Index, the
-                            current
-                            data appears to be out of sync. Do you wish to refresh it?
-                        </p>
-                        <p class="lead">
-                            <a class="btn btn-primary btn-lg shadow-sm" href="{% url 'stock-list' %}" role="button">
-                                View Stocks
-                            </a>
-                            <a class="btn btn-primary btn-lg shadow-sm" id="refreshData" href="#" role="button"
-                               onclick="refreshStockData()">Refresh Data</a>
-                        </p>
-                        {% else %}
-                        <p>
-                            This prototype covers the 30 stocks included in the Dow Industrial Average Index.
-                        </p>
-                        <p class="lead">
-                            <a class="btn btn-primary btn-lg shadow-sm" href="{% url 'stock-list' %}" role="button">
-                                View Stocks
-                            </a>
-                        </p>
-                        {% endif %}
-                    </div>
+                    {% if data_refresh %}
+                    <p>
+                        This prototype covers the 30 stocks included in the Dow Industrial Average Index, the
+                        current
+                        data appears to be out of sync. Do you wish to refresh it?
+                    </p>
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg shadow-sm" href="{% url 'stock-list' %}" role="button">
+                            View Stocks
+                        </a>
+                        <a class="btn btn-primary btn-lg shadow-sm" id="refreshData" href="#" role="button"
+                           onclick="refreshStockData()">Refresh Data</a>
+                    </p>
+                    {% else %}
+                    <p>
+                        This prototype covers the 30 stocks included in the Dow Industrial Average Index.
+                    </p>
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg shadow-sm" href="{% url 'stock-list' %}" role="button">
+                            View Stocks
+                        </a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row bt-2 shadow-sm">
+                <h4 class="display-4 text-center">Top Movers</h4>
+                <div class="col">
+                    <table class="table table-hover mr-2 ml-2 shadow-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Change</th>
+                            <th scope="col">Change %</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for winner in top_winners %}
+                        <td scope="row">
+                            <a href="{% url 'stock-detail' ticker=winner.stock.ticker %}">{{ winner.stock.ticker
+                                }}</a>
+                        </td>
+                        <td scope="row" class="text-success">{{ winner.change }}</td>
+                        <td scope="row" class="text-success">{{ winner.change_perc}} <i class="fas fa-angle-up"></i>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="row bt-2 shadow-sm">
-                    <h4 class="display-4 text-center">Top Movers</h4>
-                    <div class="col">
-                        <table class="table table-hover mr-2 ml-2 shadow-sm">
-                            <thead>
-                            <tr>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Change</th>
-                                <th scope="col">Change %</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for winner in top_winners %}
-                            <td scope="row">
-                                <a href="{% url 'stock-detail' ticker=winner.stock.ticker %}">{{ winner.stock.ticker
-                                    }}</a>
-                            </td>
-                            <td scope="row" class="text-success">{{ winner.change }}</td>
-                            <td scope="row" class="text-success">{{ winner.change_perc}} <i class="fas fa-angle-up"></i>
-                            </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col">
-                        <table class="table table-hover mr-2 ml-2 shadow-sm">
-                            <thead>
-                            <tr>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Change</th>
-                                <th scope="col">Change %</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for loser in top_losers %}
-                            <td scope="row">
-                                <a href="{% url 'stock-detail' ticker=loser.stock.ticker %}">{{ loser.stock.ticker
-                                    }}</a>
-                            </td>
-                            <td scope="row" class="text-danger">{{ loser.change }}</td>
-                            <td scope="row" class="text-danger">{{ loser.change_perc}} <i
-                                    class="fas fa-angle-down"></i></i>
-                            </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col">
+                    <table class="table table-hover mr-2 ml-2 shadow-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Change</th>
+                            <th scope="col">Change %</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for loser in top_losers %}
+                        <td scope="row">
+                            <a href="{% url 'stock-detail' ticker=loser.stock.ticker %}">{{ loser.stock.ticker
+                                }}</a>
+                        </td>
+                        <td scope="row" class="text-danger">{{ loser.change }}</td>
+                        <td scope="row" class="text-danger">{{ loser.change_perc}} <i
+                                class="fas fa-angle-down"></i></i>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
