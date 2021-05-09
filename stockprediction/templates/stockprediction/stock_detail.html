@@ -1,73 +1,88 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-2 bg-light">
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container-fluid">
-            <h1 class="display-4">
-                <span>{{ stock.name }}</span>
-                {% if stock.latest_data.change_perc > 0 %}
-                <span class="lead">{{ stock.latest_data.adj_close }}
-                    <small class="text-success">{{ stock.latest_data.change_perc }}% <i
-                            class="fas fa-sort-up"></i></small>
-                    </span>
-                {% elif stock.latest_data.change_perc == 0 %}
-                <span class="lead">{{ stock.latest_data.adj_close }}
-                    <small>{{ stock.latest_data.change_perc }}% <i class="fas fa-sort-down"></i></small>
-                    </span>
-                {% else %}
-                <span class="lead">{{ stock.latest_data.adj_close }}
-                    <small class="text-danger">{{ stock.latest_data.change_perc }}% <i
-                            class="fas fa-sort-down"></i></small>
-                    </span>
-                {% endif %}
 
-                {% if stock.refresh %}
-                <span class="lead">
-                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                    <i class="fas fa-sync"></i>
-                </a>
-                </span>
+<div class="row">
+    <div class="col-3 shadow h-100 overflow-auto">
+        <h1 class="display-6 text-center">
+            {{ stock.ticker }} Tweets
+        </h1>
+    </div>
+
+    <div class="col-9 h-100 overflow-auto">
+        <div class="container mt-2">
+            <div class="jumbotron jumbotron-fluid shadow-sm">
+                <div class="container-fluid">
+                    <h1 class="display-4">
+                        <span>{{ stock.name }}</span>
+
+                        {% if stock.latest_data.change_perc > 0 %}
+                        <span class="lead">{{ stock.latest_data.adj_close }}
+                            <small class="text-success">{{ stock.latest_data.change_perc }}%
+                                <i class="fas fa-sort-up"></i>
+                            </small>
+                        </span>
+                        {% elif stock.latest_data.change_perc == 0 %}
+                        <span class="lead">{{ stock.latest_data.adj_close }}
+                            <small>{{ stock.latest_data.change_perc }}%
+                                <i class="fas fa-sort-down"></i>
+                            </small>
+                        </span>
+                        {% else %}
+                        <span class="lead">{{ stock.latest_data.adj_close }}
+                            <small class="text-danger">{{ stock.latest_data.change_perc }}%
+                                <i class="fas fa-sort-down"></i>
+                            </small>
+                        </span>
+                        {% endif %}
+
+                        {% if stock.refresh %}
+                        <span class="lead">
+                            <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                        </span>
+                        {% else %}
+                        <span class="lead">
+                            <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                        </span>
+                        {% endif %}
+                    </h1>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row mt-5 shadow-sm">
+                <h4 class="display-4">Technical Indicators</h4>
+                {% if ti_chart %}
+                {{ ti_chart|safe }}
                 {% else %}
-                <span class="lead">
-                <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                    <i class="fas fa-sync"></i>
-                </a>
-                </span>
+                <p>Chart cannot be displayed</p>
                 {% endif %}
-            </h1>
+            </div>
+
+            <div class="row mt-5 shadow-sm">
+                <h4 class="display-4">Machine Learning Test Predictions</h4>
+                {% if ml_test_chart %}
+                {{ ml_test_chart|safe }}
+                {% else %}
+                <p>Predictions could not be shown</p>
+                {% endif %}
+            </div>
+
+            <div class="row mt-5 shadow-sm">
+                <h4 class="display-4">Machine Learning Future Predictions</h4>
+                {% if ml_future_chart %}
+                {{ ml_future_chart|safe }}
+                {% else %}
+                <p>Predictions could not be shown</p>
+                {% endif %}
+            </div>
         </div>
     </div>
-
-    <hr>
-
-    <div class="row mt-5">
-        <h4 class="display-4">Technical Indicators</h4>
-        {% if ti_chart %}
-        {{ ti_chart|safe }}
-        {% else %}
-        <p>Chart cannot be displayed</p>
-        {% endif %}
-    </div>
-
-    <div class="row mt-5 ">
-        <h4 class="display-4">Machine Learning Test Predictions</h4>
-        {% if ml_test_chart %}
-        {{ ml_test_chart|safe }}
-        {% else %}
-        <p>Predictions could not be shown</p>
-        {% endif %}
-    </div>
-
-    <div class="row mt-5 ">
-        <h4 class="display-4">Machine Learning Future Predictions</h4>
-        {% if ml_future_chart %}
-        {{ ml_future_chart|safe }}
-        {% else %}
-        <p>Predictions could not be shown</p>
-        {% endif %}
-    </div>
-
 </div>
 
 {% endblock %}

@@ -285,7 +285,6 @@ class StockMachineLearning:
             # Plot observed history
             if len(x_obs) > 0:
                 layout = {
-                    "title": {"text": "Machine Learning Prediction"},
                     "xaxis": {"title": "Time Index"},
                     "yaxis": {"title": "Adjusted Close"},
                     "yaxis2": {
