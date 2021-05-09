@@ -1,5 +1,6 @@
 from django.conf import settings
 import tweepy
+from stockprediction.models import Tweet
 
 
 def collect_tweets(ticker):
