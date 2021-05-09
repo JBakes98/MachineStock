@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 
-from stockprediction.models import Stock
+from stockprediction.models import Stock,Tweet
 
 
 class StockList(ListView):

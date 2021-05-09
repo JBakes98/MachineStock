@@ -2,7 +2,7 @@ import datetime
 
 from django.views.generic import DetailView
 
-from stockprediction.models import Stock
+from stockprediction.models import Stock, Tweet
 from stockprediction.utils import date_utils
 
 
