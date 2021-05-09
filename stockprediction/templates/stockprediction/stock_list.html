@@ -1,106 +1,105 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2 shadow d-inline-block overflow-auto">
-            <div class="container-fluid">
-                <h1 class="display-6 m-1">Recent Tweets</h1>
-                {% for tweet in tweets %}
-                <div class="card m-2">
-                    <div class="card-header">
-                        {{ tweet.user_screen_name }}
-                        <small>{{ tweet.created_at }}</small>
-                    </div>
-                    <div class="card-body">
-                        <p>{{ tweet.text }}</p>
-                        <div class="row justify-content-between">
-                            <div class="col">
-                                <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
-                            </div>
-                            <div class="col">
-                                <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
-                            </div>
+<div class="row">
+    <div class="col-2 shadow d-inline-block overflow-auto">
+        <div class="container-fluid">
+            <h1 class="display-6 m-1">Recent Tweets</h1>
+            {% for tweet in tweets %}
+            <div class="card m-2">
+                <div class="card-header">
+                    {{ tweet.user_screen_name }}
+                    <small>{{ tweet.created_at }}</small>
+                </div>
+                <div class="card-body">
+                    <p>{{ tweet.text }}</p>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
+                        </div>
+                        <div class="col">
+                            <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-        </div>
-
-        <div class="col-10 d-inline-block overflow-auto">
-            <div class="row mt-2">
-                <div class="jumbotron bg-light">
-                    <h1 class="display-4">Stocks</h1>
-                    <p>
-                        These are the stocks from the Dow Industrial Average index, these
-                        30 companies are some of the largest on the market so act as a good test
-                        sample for this project.
-                    </p>
-                </div>
-            </div>
-
-            <div class="row mt-2 shadow">
-                <table class="table table-hover mr-2 ml-2">
-                    <thead>
-                    <tr>
-                        <th scope="col">Ticker</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Exchange</th>
-                        <th scope="col">Latest Price</th>
-                        <th scope="col">Change %</th>
-                        <th scope="col">Refresh</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for stock in stock_list %}
-                    <tr>
-                        <th scope="row">
-                            <a href="{% url 'stock-detail' ticker=stock.ticker %}">{{ stock.ticker }}</a>
-                        </th>
-                        <td>{{ stock.name }}</td>
-                        <td>{{ stock.exchange }}</td>
-
-                        {% if stock.latest_data.change_perc > 0 %}
-                        <td class="text-success">{{ stock.latest_data.adj_close }}</td>
-                        <td class="text-success">{{ stock.latest_data.change_perc}}
-                            <i class="fas fa-angle-up"></i>
-                        </td>
-                        {% elif stock.latest_data.change_perc == 0 %}
-                        <td>{{ stock.latest_data.adj_close }}</td>
-                        <td>{{ stock.latest_data.change_perc}}
-                            <i class="far fa-window-minimize"></i>
-                        </td>
-                        {% else %}
-                        <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
-                        <td class="text-danger">{{ stock.latest_data.change_perc}}
-                            <i class="fas fa-angle-down"></i>
-                        </td>
-                        {% endif %}
-
-                        {% if stock.refresh %}
-                        <td>
-                            <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                        </td>
-                        {% else %}
-                        <td>
-                            <a class="nav-link disabled"
-                               href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                        </td>
-                        {% endif %}
-
-                    </tr>
-                    {% endfor %}
-
-                    </tbody>
-                </table>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
-    {% endblock %}
+    <div class="col-10 d-inline-block overflow-auto">
+        <div class="row mt-2">
+            <div class="jumbotron bg-light">
+                <h1 class="display-4">Stocks</h1>
+                <p>
+                    These are the stocks from the Dow Industrial Average index, these
+                    30 companies are some of the largest on the market so act as a good test
+                    sample for this project.
+                </p>
+            </div>
+        </div>
+
+        <div class="row mt-2 shadow">
+            <table class="table table-hover mr-2 ml-2">
+                <thead>
+                <tr>
+                    <th scope="col">Ticker</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Exchange</th>
+                    <th scope="col">Latest Price</th>
+                    <th scope="col">Change %</th>
+                    <th scope="col">Refresh</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for stock in stock_list %}
+                <tr>
+                    <th scope="row">
+                        <a href="{% url 'stock-detail' ticker=stock.ticker %}">{{ stock.ticker }}</a>
+                    </th>
+                    <td>{{ stock.name }}</td>
+                    <td>{{ stock.exchange }}</td>
+
+                    {% if stock.latest_data.change_perc > 0 %}
+                    <td class="text-success">{{ stock.latest_data.adj_close }}</td>
+                    <td class="text-success">{{ stock.latest_data.change_perc}}
+                        <i class="fas fa-angle-up"></i>
+                    </td>
+                    {% elif stock.latest_data.change_perc == 0 %}
+                    <td>{{ stock.latest_data.adj_close }}</td>
+                    <td>{{ stock.latest_data.change_perc}}
+                        <i class="far fa-window-minimize"></i>
+                    </td>
+                    {% else %}
+                    <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
+                    <td class="text-danger">{{ stock.latest_data.change_perc}}
+                        <i class="fas fa-angle-down"></i>
+                    </td>
+                    {% endif %}
+
+                    {% if stock.refresh %}
+                    <td>
+                        <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                            <i class="fas fa-sync"></i>
+                        </a>
+                    </td>
+                    {% else %}
+                    <td>
+                        <a class="nav-link disabled"
+                           href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                            <i class="fas fa-sync"></i>
+                        </a>
+                    </td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
