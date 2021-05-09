@@ -3,59 +3,60 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-3 shadow h-100 d-inline-block overflow-auto">
+    <div class="col-3 shadow min-vh-100 h-100 d-inline-block overflow-auto">
         <h1 class="display-6 text-center">
             {{ stock.ticker }} Tweets
         </h1>
     </div>
 
-    <div class="col-9 h-100 d-inline-block overflow-auto">
-        <div class="container mt-2 shadow-sm">
-            <div class="jumbotron jumbotron-fluid">
-                <div class="container-fluid">
-                    <h1 class="display-4">
-                        <span>{{ stock.name }}</span>
+    <div class="col-9 min-vh-100 h-100 d-inline-block overflow-auto pr-0">
+        <div class="container">
+            <div class="row mt-2">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container-fluid">
+                        <h1 class="display-4">
+                            <span>{{ stock.name }}</span>
 
-                        {% if stock.latest_data.change_perc > 0 %}
-                        <span class="lead">{{ stock.latest_data.adj_close }}
+                            {% if stock.latest_data.change_perc > 0 %}
+                            <span class="lead">{{ stock.latest_data.adj_close }}
                             <small class="text-success">{{ stock.latest_data.change_perc }}%
                                 <i class="fas fa-sort-up"></i>
                             </small>
                         </span>
-                        {% elif stock.latest_data.change_perc == 0 %}
-                        <span class="lead">{{ stock.latest_data.adj_close }}
+                            {% elif stock.latest_data.change_perc == 0 %}
+                            <span class="lead">{{ stock.latest_data.adj_close }}
                             <small>{{ stock.latest_data.change_perc }}%
                                 <i class="fas fa-sort-down"></i>
                             </small>
                         </span>
-                        {% else %}
-                        <span class="lead">{{ stock.latest_data.adj_close }}
+                            {% else %}
+                            <span class="lead">{{ stock.latest_data.adj_close }}
                             <small class="text-danger">{{ stock.latest_data.change_perc }}%
                                 <i class="fas fa-sort-down"></i>
                             </small>
                         </span>
-                        {% endif %}
+                            {% endif %}
 
-                        {% if stock.refresh %}
-                        <span class="lead">
+                            {% if stock.refresh %}
+                            <span class="lead">
                             <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                                 <i class="fas fa-sync"></i>
                             </a>
                         </span>
-                        {% else %}
-                        <span class="lead">
+                            {% else %}
+                            <span class="lead">
                             <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
                                 <i class="fas fa-sync"></i>
                             </a>
                         </span>
-                        {% endif %}
-                    </h1>
+                            {% endif %}
+                        </h1>
+                    </div>
                 </div>
             </div>
-
             <hr>
 
-            <div class="row mt-5">
+            <div class="row mt-5 shadow">
                 <h4 class="display-4">Technical Indicators</h4>
                 {% if ti_chart %}
                 {{ ti_chart|safe }}
@@ -64,7 +65,7 @@
                 {% endif %}
             </div>
 
-            <div class="row mt-5">
+            <div class="row mt-5 shadow">
                 <h4 class="display-4">Machine Learning Test Predictions</h4>
                 {% if ml_test_chart %}
                 {{ ml_test_chart|safe }}
@@ -73,7 +74,7 @@
                 {% endif %}
             </div>
 
-            <div class="row mt-5">
+            <div class="row mt-5 shadow">
                 <h4 class="display-4">Machine Learning Future Predictions</h4>
                 {% if ml_future_chart %}
                 {{ ml_future_chart|safe }}
