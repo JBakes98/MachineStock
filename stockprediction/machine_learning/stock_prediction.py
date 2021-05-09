@@ -256,7 +256,6 @@ class StockMachineLearning:
         y_hats = ml_utils.to_list(ml_utils.to_prediction(out, **prediction_kwargs))
         y_quantiles = ml_utils.to_list(ml_utils.to_quantiles(out, **quantiles_kwargs))
 
-        figs = []
         for y_raw, y_hat, y_quantile, encoder_target, decoder_target in zip(
                 y_raws, y_hats, y_quantiles, encoder_targets, decoder_targets
         ):
@@ -284,6 +283,7 @@ class StockMachineLearning:
 
             # Plot observed history
             layout = {
+                "title": f"Loss {self.model.loss}",
                 "xaxis": {"title": "Time Index"},
                 "yaxis": {"title": "Adjusted Close"},
                 "yaxis2": {
@@ -360,6 +360,5 @@ class StockMachineLearning:
                 data = ([trace1, trace3, trace4, trace5])
 
             plot_div = plot(Figure(data=data, layout=layout), output_type='div')
-            figs.append(plot_div)
 
             return plot_div

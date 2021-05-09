@@ -134,32 +134,35 @@ class Stock(models.Model):
         data = ([trace1, trace2, trace3, trace4, trace5])
 
         layout = {
-            "xaxis": {"rangeselector": {
-                "x": 0,
-                "y": 0.9,
-                "font": {"size": 13},
+            "xaxis": {
+                "title": "Adjusted Close",
+                "rangeselector": {
+                    "x": 0,
+                    "y": 0.9,
+                    "font": {"size": 13},
 
-                "buttons": [
-                    {
-                        "step": "all",
-                        "count": 1,
-                        "label": "reset"
-                    },
-                    {
-                        "step": "month",
-                        "count": 3,
-                        "label": "3 mo",
-                        "stepmode": "backward"
-                    },
-                    {
-                        "step": "month",
-                        "count": 1,
-                        "label": "1 mo",
-                        "stepmode": "backward"
-                    },
-                    {"step": "all"}
-                ]
-            }},
+                    "buttons": [
+                        {
+                            "step": "all",
+                            "count": 1,
+                            "label": "reset"
+                        },
+                        {
+                            "step": "month",
+                            "count": 3,
+                            "label": "3 mo",
+                            "stepmode": "backward"
+                        },
+                        {
+                            "step": "month",
+                            "count": 1,
+                            "label": "1 mo",
+                            "stepmode": "backward"
+                        },
+                        {"step": "all"}
+                    ]
+                }
+            },
             "yaxis": {
                 "domain": [0, 0.2],
                 "showticklabels": False,
