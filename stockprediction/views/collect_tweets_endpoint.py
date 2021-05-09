@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 
 from stockprediction.models import Stock
-from stockprediction.tasks import collect_tweets
+from stockprediction.tasks.collect_tweets_task import collect_tweets
 
 
 class CollectTweetsEndpoint(View):
