@@ -3,7 +3,6 @@
 {% block content %}
 <div class="row">
     <div class="col-2 shadow d-inline-block overflow-auto">
-        <div class="container-fluid">
             <h1 class="display-6 m-1">Recent Tweets</h1>
             {% for tweet in tweets %}
             <div class="card m-2">
@@ -25,7 +24,6 @@
             </div>
             {% endfor %}
         </div>
-    </div>
 
     <div class="col-10 d-inline-block overflow-auto">
         <div class="row mt-2">
@@ -95,7 +93,6 @@
 
                 </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
