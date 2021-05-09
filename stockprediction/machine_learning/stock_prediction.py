@@ -280,10 +280,12 @@ class StockMachineLearning:
 
             interpretation = self.model.interpret_output(out)
             encoder_length = x['encoder_lengths'][self.stock_idx]
+            loss = self.model.loss
+            loss_value = loss(y_raw[None], (y[-n_pred:][None], None), y[:n_pred][None])
 
             # Plot observed history
             layout = {
-                "title": f"Loss {self.model.loss}",
+                "title": f"Loss {loss_value}",
                 "xaxis": {"title": "Time Index"},
                 "yaxis": {"title": "Adjusted Close"},
                 "yaxis2": {

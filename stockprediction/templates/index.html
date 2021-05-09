@@ -13,6 +13,14 @@
                 </div>
                 <div class="card-body">
                     <p>{{ tweet.text }}</p>
+                    <span>
+                        <p class="text-start">
+                            <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
+                        </p>
+                        <p class="text-end">
+                            <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
+                        </p>
+                    </span>
                 </div>
             </div>
             {% endfor %}
