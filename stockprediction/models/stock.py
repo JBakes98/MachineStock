@@ -10,7 +10,42 @@ from .exchange import Exchange
 
 
 class Stock(models.Model):
-    """ Model to represent a Stock """
+    """
+    A class used to represent a Stock
+
+    ...
+
+    Attributes
+    ----------
+    name : CharField()
+        The name of the Stock
+    ticker : CharField()
+        The ticker of the Stock
+    exchange : ForeignKey()
+        A Foreign Key relation to an Exchange
+
+    Methods
+    -------
+    __str__()
+        Returns the ticker attribute of the class when called
+    latest_data()
+        Returns the latest StockData object for the  Stock
+    get_data()
+        Gets the Stocks related StockData instances
+    get_ml_data()
+        Gets the machine learning dataset for Stocks
+    refresh()
+        Checks if the Stocks data is out of date and needs a refresh
+    plot_technical_indicators()
+        Plot the technical indicators of the Stock on a chart
+    get_test_predictions()
+        Get the machine learning test predictions chart for the Stock
+    get_future_predictions()
+        Get the machine learning future predictions chart for the Stock
+    get_charts()
+        Gets the test and future machine learning prediction charts
+    """
+
     name = models.CharField(unique=True, max_length=255, blank=False, null=False)
     ticker = models.CharField(unique=True, max_length=4, blank=False, null=False)
     exchange = models.ForeignKey(Exchange, on_delete=models.CASCADE, blank=False, null=False)
@@ -24,10 +59,12 @@ class Stock(models.Model):
     @property
     def latest_data(self):
         """ Property that is the latest data for the Stock """
+
         return self.stock_data.first()
 
     def get_data(self) -> pd.DataFrame:
-        """ Get all of the Stocks related data and return it as a DataFrame"""
+        """ Get all of the Stocks related data and return it as a DataFrame """
+
         from .stock_data import StockData
 
         dataset = pd.DataFrame.from_records(
@@ -45,7 +82,8 @@ class Stock(models.Model):
         return dataset
 
     def get_ml_data(self) -> pd.DataFrame:
-        """ Get all of the Stocks related data and return it as a DataFrame"""
+        """ Get all of the StockData for machine learning use as a Dataframe """
+
         from .stock_data import StockData
 
         dataset = pd.DataFrame.from_records(
@@ -63,6 +101,8 @@ class Stock(models.Model):
         return dataset
 
     def refresh(self):
+        """ Checks if the Stocks data is out of date and needs a refresh """
+
         from stockprediction.utils import date_utils
 
         data = self.latest_data
@@ -188,6 +228,12 @@ class Stock(models.Model):
         return plot_div
 
     def get_test_predictions(self):
+        """ Create a Plotly Figure of the Stocks machine learning test predictions
+
+        This method creates a chart of the machine learning test predictions
+        on a Plotly figure in the output of a div for inclusion in templates.
+        """
+
         from stockprediction.machine_learning import StockMachineLearning
         from stockprediction.utils import dataframe_utils as df_utils
 
@@ -197,6 +243,12 @@ class Stock(models.Model):
         return ml.plot_test_predictions()
 
     def get_future_predictions(self):
+        """ Create a Plotly Figure of the Stocks machine learning future predictions
+
+        This method creates a chart of the machine learning future predictions
+        on a Plotly figure in the output of a div for inclusion in templates.
+        """
+
         from stockprediction.machine_learning import StockMachineLearning
         from stockprediction.utils import dataframe_utils as df_utils
 
@@ -206,6 +258,11 @@ class Stock(models.Model):
         return ml.plot_future_predictions()
 
     def get_charts(self):
+        """ Gets the Stocks three charts
+
+        This method gets the three stocks charts and returns all three.
+        """
+
         from stockprediction.machine_learning import StockMachineLearning
         from stockprediction.utils import dataframe_utils as df_utils
 

@@ -7,34 +7,30 @@ from pytorch_forecasting.metrics import (
 
 
 def to_list(value: Any) -> List[Any]:
-    """
-    Convert value or list to list of values.
-    If already list, return object directly
+    """Convert value or list to list of values
 
-    Args:
-        value (Any): value to convert
-
-    Returns:
-        List[Any]: list of values
+    Parameters
+    ----------
+    value : Any
+        Value to convert
     """
+
+    # If its already a list, return object
     if isinstance(value, (tuple, list)) and not isinstance(value, rnn.PackedSequence):
         return value
     else:
         return [value]
 
 
-def to_prediction(out: Dict[str, Any], **kwargs):
+def to_prediction(out: Dict[str, Any]):
+    """ Convert output to prediction using the loss metric.
+
+    Parameters
+    ----------
+    out : (Dict[str, Any])
+        output of network where "prediction" has been transformed
     """
-        Convert output to prediction using the loss metric.
 
-        Args:
-            out (Dict[str, Any]): output of network where "prediction" has been
-                transformed with :py:meth:`~transform_output`
-            **kwargs: arguments to metric ``to_quantiles`` method
-
-        Returns:
-            torch.Tensor: predictions of shape batch_size x timesteps
-        """
     # if samples were already drawn directly take mean
     if out.get("output_transformation", True) is None:
         if isinstance(QuantileLoss(), MultiLoss):
@@ -50,17 +46,16 @@ def to_prediction(out: Dict[str, Any], **kwargs):
 
 
 def to_quantiles(out: Dict[str, Any], **kwargs):
+    """ Convert output to quantiles using the loss metric.
+
+    Parameters
+    ----------
+    out : (Dict[str, Any])
+        Output of network where "prediction" has been transformed
+    **kwargs : Dict
+        arguments for metric 'to_quantiles' method
     """
-        Convert output to quantiles using the loss metric.
 
-        Args:
-            out (Dict[str, Any]): output of network where "prediction" has been
-                transformed with :py:meth:`~transform_output`
-            **kwargs: arguments to metric ``to_quantiles`` method
-
-        Returns:
-            torch.Tensor: quantiles of shape batch_size x timesteps x n_quantiles
-        """
     # if samples are output directly take quantiles
     if out.get("output_transformation", True) is None:
         if isinstance(QuantileLoss().loss, MultiLoss):

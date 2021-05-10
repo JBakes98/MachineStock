@@ -5,22 +5,58 @@ from .stock import Stock
 
 
 class StockData(models.Model):
-    """ Model to represent Stocks data
+    """
+    A class used to represent Stock Data
+
+    ...
 
     Attributes
     ----------
-    id : BigAutoField
-        the id for the specific data, a big int due to the number of
-        stock periods that may be stored from over multiple years
-    date : DateTimeField
-        the date and time this  data is for
-    stock : Stock
-        the Stock object this data is for
+    id : BigAutoField()
+        The id of the stock,
+    date : DateTimefield()
+        The date the data is for
+    stock : ForeignKey()
+        A Foreign Key relation to a Stock the data is for
+    high : DecimalField()
+        The highest price of the Stock on a date
+    low : DecimalField()
+        The lowest price of a Stock on a date
+    open : DecimalField()
+        The open price of a Stock on a date
+    close : DecimalField()
+        The close price of a Stock on a date
+    adj_close : DecimalField()
+        The adjusted close price of a Stock on a date
+    volume : BigIntergerField()
+        The volume of shares of a Stock traded on a date
+    dividend_amount : DecimalField()
+        The dividend amount for a Stock on a date
+    change : DecimalField()
+        The change between the adj_close to the date before this date
+    change_perc : DecimalField()
+        The change between the adj_close to the date before this date as a percent
+    ma7 : DecimalField()
+        The 7 day moving average value on a date
+    ma21 : DecimalField()
+        The 21 day moving average value on a date
+    ema26 : DecimalField()
+        The 26 day exponential moving average value on a date
+    ema12 : DecimalField()
+        The 12 day exponential moving average value on a date
+    MACD : DecimalField()
+        The Moving Average Convergence Divergence value on a date
+    sd20 : DecimalField()
+        The 20 day moving average used for bollinger bands
+    upper_band : DecimalField()
+        The value of the upper band of bollinger bands on a date
+    lower_band  : DecimalField()
+        The value of the lower band of bollinger bands on a date
 
     Methods
     -------
-    __str__(self)
-        Prints the ticker attribute of the stock and the date of the data
+    __str__()
+        Returns a string of the related Stock the data is for and the date of the data
     """
 
     id = models.BigAutoField(primary_key=True)

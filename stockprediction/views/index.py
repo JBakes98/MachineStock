@@ -8,6 +8,7 @@ from stockprediction.utils import date_utils
 
 class IndexView(TemplateView):
     """ The Index view of the project """
+
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):

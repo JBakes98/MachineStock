@@ -23,6 +23,8 @@ def collect_stock_data(ticker: str) -> pd.DataFrame:
         raise e
 
     dataset, meta_data = ts.get_daily_adjusted(stock.ticker)
+
+    # Format dataset and calculate the technical indicators
     dataset = df_utils.format_stock_dataset_for_db(dataset, stock.ticker)
     dataset = stock_utils.get_technical_indicators(dataset, 'adj close')
 

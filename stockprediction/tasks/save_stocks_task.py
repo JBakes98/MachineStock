@@ -7,8 +7,10 @@ from stockprediction.models import Stock, StockData
 
 def save_stock_data(dataset: pd.DataFrame) -> None:
     """ Method that saves a dataset to StockData objects """
+
     stock = Stock.objects.get(ticker=dataset['stock'].iloc[0])
 
+    # Iterate over the dataset and save each row
     for row in dataset.itertuples():
         try:
             StockData.objects.create(

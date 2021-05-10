@@ -5,13 +5,14 @@ import pandas as pd
 def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str) -> pd.DataFrame:
     """ Format DataFrame prepared for saving to StockData model
 
-        Parameters
-        ----------
-        dataset : pandas.DataFrame
-            A dataframe that need to be formatted
-        ticker: str
-            The ticker of the stock the data is for
+    Parameters
+    ----------
+    dataset : pandas.DataFrame
+        A dataframe that need to be formatted
+    ticker: str
+        The ticker of the stock the data is for
     """
+
     # Format DataFrame by moving the date index into a column,
     # flip the data so most recent data is at the bottom for when rolling
     # averages are calculated, drop the unnecessary data and simplify remaining
@@ -34,8 +35,19 @@ def format_stock_dataset_for_db(dataset: pd.DataFrame, ticker: str) -> pd.DataFr
 
 
 def format_stock_dataset_for_ml(dataset: pd.DataFrame):
+    """ Format DataFrame prepared for machine learning use
+
+    Parameters
+    ----------
+    dataset : pandas.DataFrame
+        A dataframe that need to be formatted
+    """
+
+    # Fill N/A values with 0 as they cant be passed to ML model
     dataset.fillna(value=0, inplace=True)
 
+    # Set the category columns to category types for machine learning
+    # categorical definition
     dataset['ticker'] = dataset['ticker'].astype('category')
     dataset['exchange'] = dataset['exchange'].astype('category')
     dataset['day'] = dataset['date'].dt.day_name()
@@ -43,7 +55,7 @@ def format_stock_dataset_for_ml(dataset: pd.DataFrame):
     dataset['month'] = dataset['date'].dt.strftime('%B')
     dataset['month'] = dataset['month'].astype('category')
 
-    # When data is retrieved
+    # Set the number values to numeric types
     dataset['open'] = pd.to_numeric(dataset['open'], errors='coerce')
     dataset['close'] = pd.to_numeric(dataset['close'], errors='coerce')
     dataset['low'] = pd.to_numeric(dataset['low'], errors='coerce')

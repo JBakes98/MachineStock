@@ -8,6 +8,7 @@ from stockprediction.utils import date_utils
 
 class StockDetail(DetailView):
     """ View that displays details of a specific Stock """
+
     model = Stock
     queryset = Stock.objects.all()
     slug_field = 'ticker'
