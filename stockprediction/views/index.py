@@ -24,10 +24,10 @@ class IndexView(TemplateView):
 
         context['top_winners'] = StockData.objects.filter(
             date=prev_weekday
-        ).order_by('-date', '-change_perc')[:5]
+        ).order_by('-change_perc')[:5]
         context['top_losers'] = StockData.objects.filter(
             date=prev_weekday
-        ).order_by('-date', 'change_perc')[:5]
+        ).order_by('change_perc')[:5]
         context['tweets'] = Tweet.objects.all()[:50]
 
         return context

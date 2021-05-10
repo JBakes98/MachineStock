@@ -27,7 +27,7 @@
     </div>
 
     <div class="col-10 h-100 overflow-auto">
-        <div class="row mt-5">
+        <div class="container mt-2">
             <div class="jumbotron shadow-sm">
                 <h1 class="display-4">Stock Learning</h1>
                 <p class="lead">
@@ -60,57 +60,57 @@
                 </p>
                 {% endif %}
             </div>
-        </div>
 
-        <div class="row bt-2 shadow-sm">
-            <h4 class="display-4 text-center">Top Movers</h4>
-            <div class="col">
-                <table class="table table-hover mr-2 ml-2 shadow-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Change</th>
-                        <th scope="col">Change %</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for winner in top_winners %}
-                    <td scope="row">
-                        <a href="{% url 'stock-detail' ticker=winner.stock.ticker %}">{{ winner.stock.ticker
-                            }}</a>
-                    </td>
-                    <td scope="row" class="text-success">{{ winner.change }}</td>
-                    <td scope="row" class="text-success">{{ winner.change_perc}} <i class="fas fa-angle-up"></i>
-                    </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <div class="row bt-2 shadow-sm">
+                <h4 class="display-4 text-center">Top Movers</h4>
+                <div class="col">
+                    <table class="table table-hover mr-2 ml-2 shadow-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Change</th>
+                            <th scope="col">Change %</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for winner in top_winners %}
+                        <td scope="row">
+                            <a href="{% url 'stock-detail' ticker=winner.stock.ticker %}">{{ winner.stock.ticker }}</a>
+                        </td>
+                        <td scope="row" class="text-success">{{ winner.change }}</td>
+                        <td scope="row" class="text-success">{{ winner.change_perc }}
+                            <i class="fas fa-angle-up"></i>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
-            <div class="col">
-                <table class="table table-hover mr-2 ml-2 shadow-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">Stock</th>
-                        <th scope="col">Change</th>
-                        <th scope="col">Change %</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for loser in top_losers %}
-                    <td scope="row">
-                        <a href="{% url 'stock-detail' ticker=loser.stock.ticker %}">{{ loser.stock.ticker
-                            }}</a>
-                    </td>
-                    <td scope="row" class="text-danger">{{ loser.change }}</td>
-                    <td scope="row" class="text-danger">{{ loser.change_perc}} <i
-                            class="fas fa-angle-down"></i></i>
-                    </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="col">
+                    <table class="table table-hover mr-2 ml-2 shadow-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Change</th>
+                            <th scope="col">Change %</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for loser in top_losers %}
+                        <td scope="row">
+                            <a href="{% url 'stock-detail' ticker=loser.stock.ticker %}">{{ loser.stock.ticker }}</a>
+                        </td>
+                        <td scope="row" class="text-danger">{{ loser.change }}</td>
+                        <td scope="row" class="text-danger">{{ loser.change_perc }}
+                            <i class="fas fa-angle-down"></i>
+                        </td>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
