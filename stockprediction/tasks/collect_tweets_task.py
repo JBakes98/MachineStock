@@ -18,8 +18,8 @@ def collect_tweets(ticker):
 
     stock = Stock.objects.get(ticker=ticker)
 
-    # Search for Tweets with the specific ticker
-    collected_tweets = api.search(q=ticker, result_type='popular', count=100)
+    # Search for recent Tweets with the specific ticker
+    collected_tweets = api.search(q=ticker, result_type='recent', count=100)
 
     # Iterate over the  collected Tweets and save them
     for tweet in collected_tweets:
