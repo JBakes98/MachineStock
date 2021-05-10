@@ -38,19 +38,19 @@
                         {% if stock.latest_data.change_perc > 0 %}
                         <span class="lead">{{ stock.latest_data.adj_close }}
                             <small class="text-success">{{ stock.latest_data.change_perc }}%
-                                <i class="fas fa-sort-up"></i>
+                                <i class="fas fa-angle-up"></i>
                             </small>
                         </span>
                         {% elif stock.latest_data.change_perc == 0 %}
                         <span class="lead">{{ stock.latest_data.adj_close }}
                             <small>{{ stock.latest_data.change_perc }}%
-                                <i class="fas fa-sort-down"></i>
+                                <i class="far fa-window-minimize"></i>
                             </small>
                         </span>
                         {% else %}
                         <span class="lead">{{ stock.latest_data.adj_close }}
                             <small class="text-danger">{{ stock.latest_data.change_perc }}%
-                                <i class="fas fa-sort-down"></i>
+                                <i class="fas fa-angle-down"></i>
                             </small>
                         </span>
                         {% endif %}
@@ -74,7 +74,7 @@
         </div>
         <hr>
 
-        <div class="row mt-5 shadow">
+        <div class="row m-5 shadow">
             <h4 class="display-4">Technical Indicators</h4>
             {% if ti_chart %}
             {{ ti_chart|safe }}
@@ -83,7 +83,7 @@
             {% endif %}
         </div>
 
-        <div class="row mt-5 shadow">
+        <div class="row m-5 shadow">
             <h4 class="display-4">Machine Learning Test Predictions</h4>
             {% if ml_test_chart %}
             {{ ml_test_chart|safe }}
@@ -92,7 +92,7 @@
             {% endif %}
         </div>
 
-        <div class="row mt-5 shadow">
+        <div class="row m-5 shadow">
             <h4 class="display-4">Machine Learning Future Predictions</h4>
             {% if ml_future_chart %}
             {{ ml_future_chart|safe }}

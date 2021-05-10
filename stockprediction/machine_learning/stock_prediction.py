@@ -100,7 +100,6 @@ class StockMachineLearning:
 
         self.dataset = dataset
         self.ticker = ticker
-        self.ticker = ticker
         self.max_prediction_length = max_prediction_length
         self.max_encoder_length = max_encoder_length
         self.training_cutoff = self.dataset['time_idx'].max() - self.max_prediction_length
@@ -498,3 +497,4 @@ class StockMachineLearning:
             plot_div = plot(Figure(data=data, layout=layout), output_type='div')
 
             return plot_div
+
