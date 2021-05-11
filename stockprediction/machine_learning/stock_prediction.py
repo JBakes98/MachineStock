@@ -273,7 +273,7 @@ class StockMachineLearning:
             self._create_dataloaders()
 
         module_dir = os.path.dirname(__file__)  # get current directory
-        file_path = os.path.join(module_dir, 'models/tft-model-v2')  # Add the path to saved model
+        file_path = os.path.join(module_dir, 'models/tft-model-v3')  # Add the path to saved model
 
         # If no saved model is found, train the model
         if not os.path.exists(file_path):
