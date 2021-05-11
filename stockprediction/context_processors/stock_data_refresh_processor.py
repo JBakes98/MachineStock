@@ -11,4 +11,5 @@ def stock_data_refresh_processor(request):
     data_date = data_date.date  # Assign to the date attribute of the model
     latest_weekday = date_utils.prev_weekday(datetime.date.today())  # Get the previous market day
 
-    return {'data_refresh': data_date.date() != latest_weekday} # Return context bool if data is out of date
+    # Return context bool if data is out of date
+    return {'data_refresh': ((data_date.date() != latest_weekday) or (data_date.date() != datetime.date.today()))}

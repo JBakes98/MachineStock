@@ -107,7 +107,7 @@ class Stock(models.Model):
 
         data = self.latest_data
         latest_weekday = date_utils.prev_weekday(datetime.date.today())
-        return data.date.date() != latest_weekday
+        return (data.date.date() != latest_weekday) or (data_date.date() != datetime.date.today())
 
     def plot_technical_indicators(self) -> Figure:
         """ Create a Plotly Figure of the Stocks technical indicators
