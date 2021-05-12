@@ -31,7 +31,7 @@ def to_prediction(out: Dict[str, Any]):
         output of network where "prediction" has been transformed
     """
 
-    # if samples were already drawn directly take mean
+    # If samples are already drawn, directly take the mean
     if out.get("output_transformation", True) is None:
         if isinstance(QuantileLoss(), MultiLoss):
             out = [Metric.to_prediction(loss, out["prediction"][idx]) for idx, loss in enumerate(QuantileLoss())]
@@ -56,7 +56,7 @@ def to_quantiles(out: Dict[str, Any], **kwargs):
         arguments for metric 'to_quantiles' method
     """
 
-    # if samples are output directly take quantiles
+    # If samples are directly output, take quantiles
     if out.get("output_transformation", True) is None:
         if isinstance(QuantileLoss().loss, MultiLoss):
             out = [

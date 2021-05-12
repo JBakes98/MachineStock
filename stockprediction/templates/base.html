@@ -16,9 +16,11 @@
 </head>
 <body class="h-100">
 
+<!--Include navbar and toast templates-->
 {% include "navbar.html" %}
 {% include "toast.html" %}
 
+<!--Create a container block where extending templates will go-->
 <div class="container-fluid h-100">
     {% block content %}
 

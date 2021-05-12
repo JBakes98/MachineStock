@@ -5,24 +5,26 @@
 <div class="row h-100">
     <div class="col-2 h-100 overflow-auto shadow">
         <h1 class="display-6 m-1">Recent Tweets</h1>
+
+        <!--Iterate over recent tweets for the stock and create a card for them-->
         {% for tweet in tweets %}
-        <div class="card m-2">
-            <div class="card-header">
-                {{ tweet.user_screen_name }}
-                <small>{{ tweet.created_at }}</small>
-            </div>
-            <div class="card-body">
-                <p>{{ tweet.text }}</p>
-                <div class="row justify-content-between">
-                    <div class="col">
-                        <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
-                    </div>
-                    <div class="col">
-                        <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
+            <div class="card m-2">
+                <div class="card-header">
+                    {{ tweet.user_screen_name }}
+                    <small>{{ tweet.created_at }}</small>
+                </div>
+                <div class="card-body">
+                    <p>{{ tweet.text }}</p>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
+                        </div>
+                        <div class="col">
+                            <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 
@@ -50,48 +52,51 @@
                 </thead>
                 <tbody>
 
+                <!--Iterate over all stocks and add them to the table-->
                 {% for stock in stock_list %}
-                <tr>
-                    <th scope="row">
-                        <a href="{% url 'stock-detail' ticker=stock.ticker %}">{{ stock.ticker }}</a>
-                    </th>
-                    <td>{{ stock.name }}</td>
-                    <td>{{ stock.exchange }}</td>
+                    <tr>
+                        <th scope="row">
+                            <a href="{% url 'stock-detail' ticker=stock.ticker %}">{{ stock.ticker }}</a>
+                        </th>
+                        <td>{{ stock.name }}</td>
+                        <td>{{ stock.exchange }}</td>
 
-                    {% if stock.latest_data.change_perc > 0 %}
-                    <td class="text-success">{{ stock.latest_data.adj_close }}</td>
-                    <td class="text-success">{{ stock.latest_data.change_perc}}
-                        <i class="fas fa-angle-up"></i>
-                    </td>
-                    {% elif stock.latest_data.change_perc == 0 %}
-                    <td>{{ stock.latest_data.adj_close }}</td>
-                    <td>{{ stock.latest_data.change_perc}}
-                        <i class="far fa-window-minimize"></i>
-                    </td>
-                    {% else %}
-                    <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
-                    <td class="text-danger">{{ stock.latest_data.change_perc}}
-                        <i class="fas fa-angle-down"></i>
-                    </td>
-                    {% endif %}
+                        <!--Check if the change is positive, neutral or negative and format accordingly-->
+                        {% if stock.latest_data.change_perc > 0 %}
+                            <td class="text-success">{{ stock.latest_data.adj_close }}</td>
+                            <td class="text-success">{{ stock.latest_data.change_perc}}
+                                <i class="fas fa-angle-up"></i>
+                            </td>
+                        {% elif stock.latest_data.change_perc == 0 %}
+                            <td>{{ stock.latest_data.adj_close }}</td>
+                            <td>{{ stock.latest_data.change_perc}}
+                                <i class="far fa-window-minimize"></i>
+                            </td>
+                        {% else %}
+                            <td class="text-danger">{{ stock.latest_data.adj_close }}</td>
+                            <td class="text-danger">{{ stock.latest_data.change_perc}}
+                                <i class="fas fa-angle-down"></i>
+                            </td>
+                        {% endif %}
 
-                    {% if stock.refresh %}
-                    <td>
-                        <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                            <i class="fas fa-sync"></i>
-                        </a>
-                    </td>
-                    {% else %}
-                    <td>
-                        <a class="nav-link disabled"
-                           href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                            <i class="fas fa-sync"></i>
-                        </a>
-                    </td>
-                    {% endif %}
-
-                </tr>
+                        <!--Check if stock data needs a manual refresh-->
+                        {% if stock.refresh %}
+                            <td>
+                                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a class="nav-link disabled"
+                                   href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
                 {% endfor %}
+
                 </tbody>
             </table>
         </div>

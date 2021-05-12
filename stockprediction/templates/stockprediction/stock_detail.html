@@ -7,24 +7,25 @@
         <h1 class="display-6 m-1">
             {{ stock.ticker }} Tweets
         </h1>
+        <!--Iterate over recent tweets for the stock and create a card for them-->
         {% for tweet in tweets %}
-        <div class="card m-2">
-            <div class="card-header">
-                {{ tweet.user_screen_name }}
-                <small>{{ tweet.created_at }}</small>
-            </div>
-            <div class="card-body">
-                <p>{{ tweet.text }}</p>
-                <div class="row justify-content-between">
-                    <div class="col">
-                        <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
-                    </div>
-                    <div class="col">
-                        <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
+            <div class="card m-2">
+                <div class="card-header">
+                    {{ tweet.user_screen_name }}
+                    <small>{{ tweet.created_at }}</small>
+                </div>
+                <div class="card-body">
+                    <p>{{ tweet.text }}</p>
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <i class="fas fa-heart"></i> {{ tweet.favourites_count }}
+                        </div>
+                        <div class="col">
+                            <i class="fas fa-retweet"></i> {{ tweet.retweet_count }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 
@@ -35,38 +36,40 @@
                     <h1 class="display-4">
                         <span>{{ stock.name }}</span>
 
+                        <!--Check if the change is , neutral or negative and format accordingly-->
                         {% if stock.latest_data.change_perc > 0 %}
-                        <span class="lead">{{ stock.latest_data.adj_close }}
-                            <small class="text-success">{{ stock.latest_data.change_perc }}%
-                                <i class="fas fa-angle-up"></i>
-                            </small>
-                        </span>
+                            <span class="lead">{{ stock.latest_data.adj_close }}
+                                <small class="text-success">{{ stock.latest_data.change_perc }}%
+                                    <i class="fas fa-angle-up"></i>
+                                </small>
+                            </span>
                         {% elif stock.latest_data.change_perc == 0 %}
-                        <span class="lead">{{ stock.latest_data.adj_close }}
-                            <small>{{ stock.latest_data.change_perc }}%
-                                <i class="far fa-window-minimize"></i>
-                            </small>
-                        </span>
+                            <span class="lead">{{ stock.latest_data.adj_close }}
+                                <small>{{ stock.latest_data.change_perc }}%
+                                    <i class="far fa-window-minimize"></i>
+                                </small>
+                            </span>
                         {% else %}
-                        <span class="lead">{{ stock.latest_data.adj_close }}
-                            <small class="text-danger">{{ stock.latest_data.change_perc }}%
-                                <i class="fas fa-angle-down"></i>
-                            </small>
-                        </span>
+                            <span class="lead">{{ stock.latest_data.adj_close }}
+                                <small class="text-danger">{{ stock.latest_data.change_perc }}%
+                                    <i class="fas fa-angle-down"></i>
+                                </small>
+                            </span>
                         {% endif %}
 
+                        <!--Check if stock data needs a manual refresh-->
                         {% if stock.refresh %}
-                        <span class="lead">
-                            <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                        </span>
+                            <span class="lead">
+                                <a class="nav-link" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                            </span>
                         {% else %}
-                        <span class="lead">
-                            <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                        </span>
+                            <span class="lead">
+                                <a class="nav-link disabled" href="{% url 'collect-stock-data-endpoint' stock.ticker %}">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                            </span>
                         {% endif %}
                     </h1>
                 </div>
@@ -76,28 +79,31 @@
 
         <div class="row m-5 shadow">
             <h4 class="display-4">Technical Indicators</h4>
+            <!--Check if the chart was passed in context, display if so otherwise display a message-->
             {% if ti_chart %}
-            {{ ti_chart|safe }}
+                {{ ti_chart|safe }}
             {% else %}
-            <p>Chart cannot be displayed</p>
+                <p>Chart cannot be displayed</p>
             {% endif %}
         </div>
 
         <div class="row m-5 shadow">
             <h4 class="display-4">Machine Learning Test Predictions</h4>
+            <!--Check if the chart was passed in context, display if so otherwise display a message-->
             {% if ml_test_chart %}
-            {{ ml_test_chart|safe }}
+                {{ ml_test_chart|safe }}
             {% else %}
-            <p>Predictions could not be shown</p>
+                <p>Predictions could not be shown</p>
             {% endif %}
         </div>
 
         <div class="row m-5 shadow">
             <h4 class="display-4">Machine Learning Future Predictions</h4>
+            <!--Check if the chart was passed in context, display if so otherwise display a message-->
             {% if ml_future_chart %}
-            {{ ml_future_chart|safe }}
+                {{ ml_future_chart|safe }}
             {% else %}
-            <p>Predictions could not be shown</p>
+                <p>Predictions could not be shown</p>
             {% endif %}
         </div>
     </div>

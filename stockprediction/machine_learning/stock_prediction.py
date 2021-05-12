@@ -233,14 +233,14 @@ class StockMachineLearning:
         tft = TemporalFusionTransformer.from_dataset(
             self.training,
             learning_rate=0.3,
-            hidden_size=512,
-            lstm_layers=6,
+            hidden_size=32,
+            lstm_layers=2,
             dropout=0.1,
             output_size=7,
             loss=QuantileLoss(),
             attention_head_size=4,
             max_encoder_length=self.max_encoder_length,
-            hidden_continuous_size=128,
+            hidden_continuous_size=8,
             log_interval=1,
             # Reduce learning rate if no improvement in validation loss after x epochs
             reduce_on_plateau_patience=4,
