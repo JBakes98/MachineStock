@@ -126,7 +126,7 @@ class StockMachineLearning:
             min_prediction_length=1,
             max_prediction_length=self.max_prediction_length,
             static_categoricals=['ticker', 'exchange'],
-            time_varying_known_categoricals=['day', ],
+            time_varying_known_categoricals=['day', 'month'],
             time_varying_unknown_categoricals=[],
             time_varying_known_reals=['time_idx', ],
             time_varying_unknown_reals=[
@@ -259,7 +259,7 @@ class StockMachineLearning:
         best_tft = TemporalFusionTransformer.load_from_checkpoint(best_model_path)
 
         # Save the model to the models directory
-        torch.save(best_tft, 'models/tft-model')
+        torch.save(best_tft, 'models/tft-model-v3')
 
     def load_model(self) -> None:
         """ Loads the TFT trained model from memory """
